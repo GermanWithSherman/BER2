@@ -1,0 +1,26 @@
+﻿<Window x:Class="BER2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BER2"
+        xmlns:ctext="clr-namespace:BER2.UI.EditTools.CText"
+        xmlns:statusbar="clr-namespace:BER2.UI.GameWindow.Statusbar"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="315.319" Width="868.834">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem x:Name="menuNew" Header="_New" InputGestureText="Ctrl+N"></MenuItem>
+            </MenuItem>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom" Height="20"></StatusBar>
+        <DockPanel>
+            <statusbar:Statusbar x:Name="Statusbar" DockPanel.Dock="Top"></statusbar:Statusbar>
+            <Button DockPanel.Dock="Left" Content="Locations"></Button>
+            <Button DockPanel.Dock="Right" Content="NPCs"></Button>
+            <Button DockPanel.Dock="Bottom" Content="Options"></Button>
+            <Button DockPanel.Dock="Top" Content="Content"></Button>
+        </DockPanel>
+    </DockPanel>
+</Window>

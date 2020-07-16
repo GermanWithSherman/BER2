@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6D03D835-0359-4DFD-830B-3182824A70FF}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>BER2</RootNamespace>
+    <AssemblyName>BER2</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="GameObjects\Cache\Cache.cs" />
+    <Compile Include="GameObjects\Cache\ConditionCache.cs" />
+    <Compile Include="GameObjects\Cache\DialogueLineCache.cs" />
+    <Compile Include="GameObjects\Cache\EventGroupCache.cs" />
+    <Compile Include="GameObjects\Cache\LocationCache.cs" />
+    <Compile Include="GameObjects\Cache\NPCTemplateCache.cs" />
+    <Compile Include="GameObjects\Cache\ServicepointCache.cs" />
+    <Compile Include="GameObjects\Cache\ServicesCache.cs" />
+    <Compile Include="GameObjects\Cache\ShopTypeCache.cs" />
+    <Compile Include="GameObjects\Cache\TextureCache.cs" />
+    <Compile Include="GameObjects\Cache\WeightedStringListCache.cs" />
+    <Compile Include="GameObjects\Characters\BodyData.cs" />
+    <Compile Include="GameObjects\Characters\NPC.cs" />
+    <Compile Include="GameObjects\Characters\NPCFilter.cs" />
+    <Compile Include="GameObjects\Characters\NPCRaw.cs" />
+    <Compile Include="GameObjects\Characters\NPCsCollection.cs" />
+    <Compile Include="GameObjects\Characters\NPCsLibrary.cs" />
+    <Compile Include="GameObjects\Characters\NPCTemplate.cs" />
+    <Compile Include="GameObjects\Characters\PC.cs" />
+    <Compile Include="GameObjects\Characters\RelationshipData.cs" />
+    <Compile Include="GameObjects\Characters\SocialData.cs" />
+    <Compile Include="GameObjects\Data\GameData.cs" />
+    <Compile Include="GameObjects\Data\Misc.cs" />
+    <Compile Include="GameObjects\Items\Item.cs" />
+    <Compile Include="GameObjects\Items\ItemsCollection.cs" />
+    <Compile Include="GameObjects\Items\ItemsFile.cs" />
+    <Compile Include="GameObjects\Items\ItemsFilter.cs" />
+    <Compile Include="GameObjects\Items\ItemsLibrary.cs" />
+    <Compile Include="GameObjects\Items\Outfit.cs" />
+    <Compile Include="GameObjects\Items\OutfitRequirement.cs" />
+    <Compile Include="GameObjects\Items\Shop.cs" />
+    <Compile Include="GameObjects\Items\ShopData.cs" />
+    <Compile Include="GameObjects\Items\ShopType.cs" />
+    <Compile Include="GameObjects\Libraries\ActivityLibrary.cs" />
+    <Compile Include="GameObjects\Libraries\DialogueTopicLibrary.cs" />
+    <Compile Include="GameObjects\Libraries\FunctionsLibrary.cs" />
+    <Compile Include="GameObjects\Libraries\InterruptServer.cs" />
+    <Compile Include="GameObjects\Libraries\ItemsLibrary.cs" />
+    <Compile Include="GameObjects\Libraries\Library.cs" />
+    <Compile Include="GameObjects\Libraries\LocationTypeLibrary.cs" />
+    <Compile Include="GameObjects\Libraries\ModsServer.cs" />
+    <Compile Include="GameObjects\Libraries\ProceduresLibrary.cs" />
+    <Compile Include="GameObjects\Libraries\TemplateLibrary.cs" />
+    <Compile Include="GameObjects\Locations\Location.cs" />
+    <Compile Include="GameObjects\Locations\LocationConnection.cs" />
+    <Compile Include="GameObjects\Locations\LocationConnections.cs" />
+    <Compile Include="GameObjects\Locations\LocationType.cs" />
+    <Compile Include="GameObjects\Locations\SubLocation.cs" />
+    <Compile Include="Manager\GameManager.cs" />
+    <Compile Include="Manager\Preferences.cs" />
+    <Compile Include="SaveFiles\SaveFile.cs" />
+    <Compile Include="UI\EditWindow\EditWindow.xaml.cs">
+      <DependentUpon>EditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\EditWindow\Tools\CText\CText.xaml.cs">
+      <DependentUpon>CText.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\ErrorMessage\ErrorMessage.cs" />
+    <Compile Include="UI\GameWindow\Statusbar\Statusbar.xaml.cs">
+      <DependentUpon>Statusbar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\GameWindow\Template.cs" />
+    <Compile Include="UI\GameWindow\UISettings.cs" />
+    <Compile Include="Util\Command\Command.cs" />
+    <Compile Include="Util\Command\CommandBreak.cs" />
+    <Compile Include="Util\Command\CommandCall.cs" />
+    <Compile Include="Util\Command\CommandConditional.cs" />
+    <Compile Include="Util\Command\CommandConsume.cs" />
+    <Compile Include="Util\Command\CommandContinue.cs" />
+    <Compile Include="Util\Command\CommandConverter.cs" />
+    <Compile Include="Util\Command\CommandDebug.cs" />
+    <Compile Include="Util\Command\CommandDialog.cs" />
+    <Compile Include="Util\Command\CommandDialogue.cs" />
+    <Compile Include="Util\Command\CommandEvent.cs" />
+    <Compile Include="Util\Command\CommandEventEnd.cs" />
+    <Compile Include="Util\Command\CommandFlush.cs" />
+    <Compile Include="Util\Command\CommandGotoLocation.cs" />
+    <Compile Include="Util\Command\CommandInterrupt.cs" />
+    <Compile Include="Util\Command\CommandItemAdd.cs" />
+    <Compile Include="Util\Command\CommandItemRemove.cs" />
+    <Compile Include="Util\Command\CommandNone.cs" />
+    <Compile Include="Util\Command\CommandNoteAdd.cs" />
+    <Compile Include="Util\Command\CommandNoteRemove.cs" />
+    <Compile Include="Util\Command\CommandOutfit.cs" />
+    <Compile Include="Util\Command\CommandOutfitManage.cs" />
+    <Compile Include="Util\Command\CommandPause.cs" />
+    <Compile Include="Util\Command\CommandsCollection.cs" />
+    <Compile Include="Util\Command\CommandServices.cs" />
+    <Compile Include="Util\Command\CommandSet.cs" />
+    <Compile Include="Util\Command\CommandShop.cs" />
+    <Compile Include="Util\Command\CommandSleep.cs" />
+    <Compile Include="Util\Command\CommandTimePass.cs" />
+    <Compile Include="Util\Conditional\Conditional.cs" />
+    <Compile Include="Util\Condition\Condition.cs" />
+    <Compile Include="Util\CText\CText.cs" />
+    <Compile Include="Util\Debug\Debug.cs" />
+    <Compile Include="Util\Modable\IInheritable.cs" />
+    <Compile Include="Util\Modable\IModable.cs" />
+    <Compile Include="Util\Modable\ModableDictionary.cs" />
+    <Compile Include="Util\Modable\ModableList.cs" />
+    <Compile Include="Util\Option\Option.cs" />
+    <Compile Include="Util\TimeFilter\TimeFilter.cs" />
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="UI\EditWindow\EditWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\EditWindow\Tools\CText\CText.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\GameWindow\Statusbar\Statusbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="GameObjects\Dialogue\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
