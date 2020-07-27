@@ -167,6 +167,9 @@
     </Compile>
     <Compile Include="UI\GameWindow\Template.cs" />
     <Compile Include="UI\GameWindow\UISettings.cs" />
+    <Compile Include="UI\ModsManagementWindow\ModsManagementWindow.xaml.cs">
+      <DependentUpon>ModsManagementWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\OutfitWindow\OutfitItemButton.xaml.cs">
       <DependentUpon>OutfitItemButton.xaml</DependentUpon>
     </Compile>
@@ -256,6 +259,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\GameWindow\Statusbar\Statusbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\ModsManagementWindow\ModsManagementWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -41,6 +41,19 @@ public class Preferences
         }
     }
 
+    [JsonProperty("ModsPath")]
+    private string _modsPath;
+    public string ModsPath
+    {
+        get
+        {
+            if (String.IsNullOrEmpty(_savePath))
+                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "BER2", "mods");
+            return _modsPath;
+        }
+        set => _modsPath = value;
+    }
+
     [JsonProperty("SavePath")]
     private string _savePath;
     public string SavePath
@@ -48,22 +61,11 @@ public class Preferences
         get
         {
             if (String.IsNullOrEmpty(_savePath))
-                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "BER2");
+                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "BER2","saves");
             return _savePath;
         }
         set => _savePath = value;
     }
 
-    /*[JsonProperty]
-    public string DataPath;
-    [JsonProperty]
-    public string SavePath;
 
-    //public Dictionary<string, bool> Mods = new Dictionary<string, bool>();
-
-    public Preferences(string path)
-    {
-        DataPath = Path.Combine(path, "data");
-        SavePath = Path.Combine(path, "saves");
-    }*/
 }

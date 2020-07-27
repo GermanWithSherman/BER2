@@ -578,7 +578,6 @@ public class GameManager
     {
         try
         {
-            Preferences = new Preferences(); //TODO
 
             Manifest manifest = File2Object<Manifest>(path);
 
@@ -769,6 +768,11 @@ public class GameManager
         Application.Quit();
     }*/
 
+
+    /// <summary>
+    /// Reloads Static Data, updates UI, clears caches.
+    /// Use after modlist has changed.
+    /// </summary>
     public void Refresh()
     {
         CachesReset();

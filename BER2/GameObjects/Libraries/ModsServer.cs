@@ -160,9 +160,8 @@ public class ModsServer
         }
         catch
         {
-            ErrorMessage.Show("Unresolvable Error in Modlist");
             _modLoadOrder.Remove(mod);
-            return false;
+            throw new ModDependencyException();
         }
         Debug.Log($"Mod {mod.ID} activated");
         Debug.Log($"Activated mods:{String.Join(",",_modLoadOrder.IDs)}");
@@ -194,9 +193,8 @@ public class ModsServer
         }
         catch
         {
-            ErrorMessage.Show("Unresolvable Error in Modlist");
             _modLoadOrder.Add(mod);
-            return false;
+            throw new ModDependencyException();
         }
         Debug.Log($"Mod {mod.ID} deactivated");
         Debug.Log($"Activated mods:{String.Join(",", _modLoadOrder.IDs)}");

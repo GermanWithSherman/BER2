@@ -14,10 +14,13 @@
             <MenuItem Header="_File">
                 <MenuItem x:Name="menuOpenGame" Header="Open Game" Click="menuOpenGame_Click"></MenuItem>
                 <Separator></Separator>
-                <MenuItem x:Name="menuLoadSaveQuick" Header="Load Savegame Quick" Click="menuLoadSaveQuick_Click" InputGestureText="F9"></MenuItem>
-                <MenuItem x:Name="menuSaveSaveQuick" Header="Save Savegame Quick" InputGestureText="F5" Click="menuSaveSaveQuick_Click"></MenuItem>
+                <MenuItem x:Name="menuLoadSaveQuick" Header="Quickload" Click="menuLoadSaveQuick_Click" InputGestureText="F9"></MenuItem>
+                <MenuItem x:Name="menuSaveSaveQuick" Header="Quicksave" InputGestureText="F5" Click="menuSaveSaveQuick_Click"></MenuItem>
                 <MenuItem x:Name="menuLoadSave" Header="_Load Savegame" InputGestureText="Ctrl+L" Click="menuLoadSave_Click"></MenuItem>
                 <MenuItem x:Name="menuSaveSave" Header="_Save Savegame" Click="menuSaveSave_Click" InputGestureText="Ctrl+S"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Mods">
+                <MenuItem x:Name="menuModsManage" Header="Manage Mods" Click="menuModsManage_Click"></MenuItem>
             </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom" Height="20"></StatusBar>

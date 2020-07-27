@@ -15,3 +15,9 @@ public class GameException : System.Exception
         return $"{Message}\n{base.ToString()}";
     }
 }
+
+public class ModDependencyException : GameException
+{
+    public ModDependencyException() : base("ModDependencyException"){}
+    public ModDependencyException(string message) : base(message) { }
+}

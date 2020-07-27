@@ -1,5 +1,6 @@
 ﻿using BER2.UI.GameWindow.Locations;
 using BER2.UI.GameWindow.NPCs;
+using BER2.UI.ModsManagementWindow;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -152,6 +153,13 @@ namespace BER2
             openFileDialog.Filter = "BER Savegame Files (*.json)|*.json";
             if (openFileDialog.ShowDialog() == true)
                 GameManager.Instance.LoadSavegame(openFileDialog.FileName);
+        }
+
+        private void menuModsManage_Click(object sender, RoutedEventArgs e)
+        {
+            ModsManagementWindow modsManagementWindow = new ModsManagementWindow(GameManager.Instance.Preferences, GameManager.Instance.ModsServer);
+
+            modsManagementWindow.ShowDialog();
         }
     }
 }

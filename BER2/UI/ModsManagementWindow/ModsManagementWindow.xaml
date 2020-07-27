@@ -1,0 +1,88 @@
+﻿<Window x:Class="BER2.UI.ModsManagementWindow.ModsManagementWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BER2.UI.ModsManagementWindow"
+        mc:Ignorable="d"
+        Closing="Window_Closing"
+        Title="ModsManagementWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70"></ColumnDefinition>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" Margin="2">
+            <Button Content="First" Visibility="Collapsed"></Button>
+            <Button Content="Up" Visibility="Collapsed"></Button>
+            <Button Content="Down" Visibility="Collapsed"></Button>
+            <Button Content="Last" Visibility="Collapsed"></Button>
+            <Button Content="Activate" x:Name="ButtonActivate" Click="ButtonActivate_Click"></Button>
+            <Button Content="Deactivate" x:Name="ButtonDeactivate" Click="ButtonDeactivate_Click"></Button>
+        </StackPanel>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0">
+                <TextBlock Text="Activated Mods"></TextBlock>
+                <ListView x:Name="ListViewModsActivated" SelectionChanged="ListViewMods_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DisplayName}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListView>
+            </StackPanel>
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="Deactivated Mods"></TextBlock>
+                <ListView x:Name="ListViewModsDeactivated" SelectionChanged="ListViewMods_SelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DisplayName}" />
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </Grid>
+        <StackPanel Grid.Column="2" x:Name="ModDetails">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Title:" HorizontalAlignment="Right"/>
+                <TextBlock Text="Title" Grid.Column="1" x:Name="ModDetailsTitle"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="ID:" HorizontalAlignment="Right"/>
+                <TextBlock Text="ID" Grid.Column="1" x:Name="ModDetailsID"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Version:" HorizontalAlignment="Right"/>
+                <TextBlock Text="Version" Grid.Column="1" x:Name="ModDetailsVersion"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Dependencies:" HorizontalAlignment="Right"/>
+                <StackPanel Grid.Column="1" x:Name="ModDetailsDependencies">
+                    
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        
+    </Grid>
+</Window>
