@@ -14,6 +14,21 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -58,8 +73,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="GameObjects\Activities\Activity.cs" />
     <Compile Include="GameObjects\Cache\Cache.cs" />
     <Compile Include="GameObjects\Cache\ConditionCache.cs" />
+    <Compile Include="GameObjects\Cache\DataCache.cs" />
     <Compile Include="GameObjects\Cache\DialogueLineCache.cs" />
     <Compile Include="GameObjects\Cache\EventGroupCache.cs" />
     <Compile Include="GameObjects\Cache\LocationCache.cs" />
@@ -70,6 +89,7 @@
     <Compile Include="GameObjects\Cache\TextureCache.cs" />
     <Compile Include="GameObjects\Cache\WeightedStringListCache.cs" />
     <Compile Include="GameObjects\Characters\BodyData.cs" />
+    <Compile Include="GameObjects\Characters\CharacterData.cs" />
     <Compile Include="GameObjects\Characters\NPC.cs" />
     <Compile Include="GameObjects\Characters\NPCFilter.cs" />
     <Compile Include="GameObjects\Characters\NPCRaw.cs" />
@@ -79,13 +99,23 @@
     <Compile Include="GameObjects\Characters\PC.cs" />
     <Compile Include="GameObjects\Characters\RelationshipData.cs" />
     <Compile Include="GameObjects\Characters\SocialData.cs" />
+    <Compile Include="GameObjects\Data\Data.cs" />
+    <Compile Include="GameObjects\Data\DataComposed.cs" />
     <Compile Include="GameObjects\Data\GameData.cs" />
+    <Compile Include="GameObjects\Data\InterruptPersistentData.cs" />
+    <Compile Include="GameObjects\Data\InterruptPersistentDataCollection.cs" />
     <Compile Include="GameObjects\Data\Misc.cs" />
+    <Compile Include="GameObjects\Data\QuestsData.cs" />
+    <Compile Include="GameObjects\Data\WorldData.cs" />
+    <Compile Include="GameObjects\Dialogue\Dialogue.cs" />
+    <Compile Include="GameObjects\Events\EventGroup.cs" />
+    <Compile Include="GameObjects\Events\EventStage.cs" />
+    <Compile Include="GameObjects\Functions\FunctionParameters.cs" />
+    <Compile Include="GameObjects\Interrupts\Interrupt.cs" />
     <Compile Include="GameObjects\Items\Item.cs" />
     <Compile Include="GameObjects\Items\ItemsCollection.cs" />
     <Compile Include="GameObjects\Items\ItemsFile.cs" />
     <Compile Include="GameObjects\Items\ItemsFilter.cs" />
-    <Compile Include="GameObjects\Items\ItemsLibrary.cs" />
     <Compile Include="GameObjects\Items\Outfit.cs" />
     <Compile Include="GameObjects\Items\OutfitRequirement.cs" />
     <Compile Include="GameObjects\Items\Shop.cs" />
@@ -106,8 +136,17 @@
     <Compile Include="GameObjects\Locations\LocationConnections.cs" />
     <Compile Include="GameObjects\Locations\LocationType.cs" />
     <Compile Include="GameObjects\Locations\SubLocation.cs" />
+    <Compile Include="GameObjects\Notes\Note.cs" />
+    <Compile Include="GameObjects\Quests\Quest.cs" />
+    <Compile Include="GameObjects\Services\Service.cs" />
+    <Compile Include="GameObjects\Services\ServiceCategory.cs" />
+    <Compile Include="GameObjects\Services\Servicepoint.cs" />
+    <Compile Include="GameObjects\Services\ServicesFile.cs" />
+    <Compile Include="GameObjects\Textures\ModableTexture.cs" />
     <Compile Include="Manager\GameManager.cs" />
     <Compile Include="Manager\Preferences.cs" />
+    <Compile Include="Manifest\Manifest.cs" />
+    <Compile Include="Mods\Mod.cs" />
     <Compile Include="SaveFiles\SaveFile.cs" />
     <Compile Include="UI\EditWindow\EditWindow.xaml.cs">
       <DependentUpon>EditWindow.xaml</DependentUpon>
@@ -116,11 +155,25 @@
       <DependentUpon>CText.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\ErrorMessage\ErrorMessage.cs" />
+    <Compile Include="UI\GameWindow\IMainContent.cs" />
+    <Compile Include="UI\GameWindow\Locations\LocationButton.xaml.cs">
+      <DependentUpon>LocationButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\GameWindow\NPCs\NPCButton.xaml.cs">
+      <DependentUpon>NPCButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\GameWindow\Statusbar\Statusbar.xaml.cs">
       <DependentUpon>Statusbar.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\GameWindow\Template.cs" />
     <Compile Include="UI\GameWindow\UISettings.cs" />
+    <Compile Include="UI\OutfitWindow\OutfitItemButton.xaml.cs">
+      <DependentUpon>OutfitItemButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\OutfitWindow\OutfitWindow.xaml.cs">
+      <DependentUpon>OutfitWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Util\Color\Color.cs" />
     <Compile Include="Util\Command\Command.cs" />
     <Compile Include="Util\Command\CommandBreak.cs" />
     <Compile Include="Util\Command\CommandCall.cs" />
@@ -154,12 +207,26 @@
     <Compile Include="Util\Condition\Condition.cs" />
     <Compile Include="Util\CText\CText.cs" />
     <Compile Include="Util\Debug\Debug.cs" />
+    <Compile Include="Util\DependentObject\DependencySorter.cs" />
+    <Compile Include="Util\DependentObject\IDependentObject.cs" />
+    <Compile Include="Util\Exception\GameException.cs" />
+    <Compile Include="Util\JSONNet\Converter\CTextConverter.cs" />
+    <Compile Include="Util\JSONNet\Converter\EventStageConverter.cs" />
+    <Compile Include="Util\Lists\WeightedList.cs" />
+    <Compile Include="Util\Lists\WeightedStringList.cs" />
+    <Compile Include="Util\Math\Math.cs" />
     <Compile Include="Util\Modable\IInheritable.cs" />
     <Compile Include="Util\Modable\IModable.cs" />
     <Compile Include="Util\Modable\ModableDictionary.cs" />
     <Compile Include="Util\Modable\ModableList.cs" />
+    <Compile Include="Util\Modable\ModableListDynamic.cs" />
     <Compile Include="Util\Option\Option.cs" />
+    <Compile Include="Util\Prioritizable\Prioritizable.cs" />
+    <Compile Include="Util\Procedure\ProceduresFile.cs" />
+    <Compile Include="Util\RandomRange\RandomRange.cs" />
+    <Compile Include="Util\Random\Random.cs" />
     <Compile Include="Util\TimeFilter\TimeFilter.cs" />
+    <Compile Include="Util\Values\Value.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -180,7 +247,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UI\GameWindow\Locations\LocationButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\GameWindow\NPCs\NPCButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\GameWindow\Statusbar\Statusbar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\OutfitWindow\OutfitItemButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\OutfitWindow\OutfitWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -213,7 +296,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GameObjects\Dialogue\" />
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 und x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

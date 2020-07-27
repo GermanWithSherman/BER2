@@ -2,7 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class CommandEvent : Command
 {
@@ -37,7 +36,7 @@ public class CommandEvent : Command
     {
         if (Event != null)
         {
-            GameManager.Instance.eventExecute(Event);
+            GameManager.Instance.EventExecute(Event);
         }
         else if (!String.IsNullOrEmpty(EventID))
         {
@@ -45,7 +44,7 @@ public class CommandEvent : Command
         }
         else
         {
-            GameManager.Instance.eventExecute(EventGroup, EventStage);
+            GameManager.Instance.EventExecute(EventGroup, EventStage);
         }
     }
 

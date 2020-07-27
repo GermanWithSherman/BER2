@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 [System.Serializable]
 public class Item : IModable
@@ -24,7 +23,7 @@ public class Item : IModable
 
     public string Gender = "fm"; //f, fm, m
 
-    public Texture Texture
+    public ModableTexture Texture
     {
         get => GameManager.Instance.TextureCache[TexturePath];
     }

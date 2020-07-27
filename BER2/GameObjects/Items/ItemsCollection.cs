@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using UnityEngine;
 
 public class ItemsCollection : ModableValueTypeHashDictionary<string>, IModable
 {
@@ -140,7 +139,7 @@ public class ItemsCollection : ModableValueTypeHashDictionary<string>, IModable
 
         for(int i = 0; i < count; i++)
         {
-            int index = UnityEngine.Random.Range(0,possibleItems.Count);
+            int index = BER2.Util.Random.Random.Range(0,possibleItems.Count);
             Item item = possibleItems[index];
 
             result.addItem(item);

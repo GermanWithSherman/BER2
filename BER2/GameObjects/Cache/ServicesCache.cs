@@ -2,11 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
 public class ServicesCache : Cache<ServicesFile>
 {
-    protected override ServicesFile create(string key)
+
+    public ServicesCache(string folder)
+    {
+        Folder = folder;
+    }
+protected override ServicesFile create(string key)
     {
         string path = Path.Combine(GameManager.Instance.DataPath, "services", key + ".json");
 

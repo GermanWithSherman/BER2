@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using UnityEngine;
 
 
 
@@ -140,6 +139,8 @@ public class NPCsLibrary : Cache<NPC>
 
     public IList<NPC> npcsPresent(SubLocation subLocation, DateTime dateTime)
     {
+        if (subLocation == null)
+            return new List<NPC>();
         string subLocationID = subLocation.ID;
         List<NPC> result = new List<NPC>();
 

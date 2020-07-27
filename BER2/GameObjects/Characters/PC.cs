@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using BER2.Util.Math;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using UnityEngine;
 
 [Modable(ModableAttribute.FieldOptions.OptOut)]
 public class PC : NPC
@@ -68,16 +68,16 @@ public class PC : NPC
     public int statCaloriesBurnt;
 
     public int statHunger;
-    private int _statHunger { get => statHunger; set => statHunger = Mathf.Clamp(value, 0, 1000000); }
+    private int _statHunger { get => statHunger; set => statHunger = Mathb.Clamp(value, 0, 1000000); }
 
     public int statHygiene;
-    private int _statHygiene { get => statHygiene; set => statHygiene = Mathf.Clamp(value, 0, 1000000); }
+    private int _statHygiene { get => statHygiene; set => statHygiene = Mathb.Clamp(value, 0, 1000000); }
 
     public int statSleep;
-    private int _statSleep { get => statSleep; set => statSleep = Mathf.Clamp(value, 0, 1000000); }
+    private int _statSleep { get => statSleep; set => statSleep = Mathb.Clamp(value, 0, 1000000); }
 
     public int StatSatisfaction;
-    private int _statSatisfaction { get => StatSatisfaction; set => StatSatisfaction = Mathf.Clamp(value, 0, 1000000); }
+    private int _statSatisfaction { get => StatSatisfaction; set => StatSatisfaction = Mathb.Clamp(value, 0, 1000000); }
 
     public override bool ShouldSerializeTexturePath() => true;
 
@@ -145,7 +145,7 @@ public class PC : NPC
         setNPCData(key, value);
     }
 
-    public Texture GetClothingslotTexture(string slot)
+    public ModableTexture GetClothingslotTexture(string slot)
     {
         string path = "";
         switch (slot)
@@ -227,7 +227,7 @@ public class PC : NPC
     public void moneyPay(long amount)
     {
         moneyCash -= amount;
-        GameManager.Instance.uiUpdate();
+        GameManager.Instance.UiUpdate();
     }
 
     public void timeDayPass()
@@ -237,11 +237,11 @@ public class PC : NPC
 
         int caloriesRequiredNet = caloriesRequired + statCaloriesBurnt;
 
-        int caloriesToLoseWeightFast = Mathf.RoundToInt(caloriesRequiredNet * 0.6f);
-        int caloriesToLoseWeight = Mathf.RoundToInt(caloriesRequiredNet * 0.8f);
+        int caloriesToLoseWeightFast = Mathb.RoundToInt(caloriesRequiredNet * 0.6f);
+        int caloriesToLoseWeight = Mathb.RoundToInt(caloriesRequiredNet * 0.8f);
 
-        int caloriesToGainWeight = Mathf.RoundToInt(caloriesRequiredNet * 1.25f);
-        int caloriesToGainWeightFast = Mathf.RoundToInt(caloriesRequiredNet * 1.67f);
+        int caloriesToGainWeight = Mathb.RoundToInt(caloriesRequiredNet * 1.25f);
+        int caloriesToGainWeightFast = Mathb.RoundToInt(caloriesRequiredNet * 1.67f);
 
         int weightChange = 0;
 

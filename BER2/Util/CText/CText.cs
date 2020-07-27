@@ -3,10 +3,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using UnityEngine;
+using System.Windows;
+using System.Windows.Controls;
 
 [JsonConverter(typeof(CTextConverter))]
-public class CText : IModable
+public class CText : IModable, IMainContent
 {
     public static implicit operator string(CText cText) => Text(cText);
 
@@ -203,5 +204,14 @@ public class CText : IModable
     public override string ToString()
     {
         return Text();
+    }
+
+    public UIElement getVisual()
+    {
+        TextBlock result = new TextBlock();
+
+        result.Text = Text();
+
+        return result;
     }
 }

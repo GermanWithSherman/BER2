@@ -13,7 +13,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Center">
             <Label Content="Time:"/>
-            <Label Content="00:00:00 01.01.1970"/>
+            <Label x:Name="StatusTime" Content="00:00:00 01.01.1970"/>
         </StackPanel>
     </Grid>
 </UserControl>

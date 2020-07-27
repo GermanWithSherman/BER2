@@ -3,7 +3,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 [Modable(ModableAttribute.FieldOptions.OptOut)]
 public class NPC : Data, IInheritable, IModable, IModableAutofields
@@ -198,7 +197,7 @@ public class NPC : Data, IInheritable, IModable, IModableAutofields
 
 
     [JsonIgnore]
-    public Texture Texture { get => GameManager.Instance.TextureCache[TexturePath]; }
+    public ModableTexture Texture { get => GameManager.Instance.TextureCache[TexturePath]; }
 
     public Conditional<string> TexturePath;
     public virtual bool ShouldSerializeTexturePath() => false;

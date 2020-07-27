@@ -2,11 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
 public class NPCTemplateCache : Cache<NPCTemplate>
 {
-    protected override NPCTemplate create(string key)
+
+    public NPCTemplateCache(string folder)
+    {
+        Folder = folder;
+    }
+
+
+protected override NPCTemplate create(string key)
     {
         string path = Path.Combine(GameManager.Instance.DataPath, "npctemplates", key + ".json");
 

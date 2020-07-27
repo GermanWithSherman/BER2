@@ -2,11 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
 public class ShopTypeCache : Cache<ShopType>
 {
-    protected override ShopType create(string key)
+    public ShopTypeCache(string folder)
+    {
+        Folder = folder;
+    }
+
+protected override ShopType create(string key)
     {
         string path = Path.Combine(GameManager.Instance.DataPath, "shoptypes", key + ".json");
 

@@ -3,10 +3,14 @@ using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
 public class EventGroupCache : Cache<EventGroup>
 {
+    public EventGroupCache(string folder)
+    {
+        Folder = folder;
+    }
+
     protected override EventGroup create(string key)
     {
         var result = base.create(key);

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 [Modable(ModableAttribute.FieldOptions.OptOut)]
 public class NPCFilter : IModable, IModableAutofields

@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using BER2;
+using BER2.UI.OutfitWindow;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -6,6 +8,9 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 
 public class GameManager
@@ -13,7 +18,21 @@ public class GameManager
     public const string PlayerVersion = "0.0.1";
 
 
-    public static GameManager Instance { get; private set; }
+    private static GameManager _instance;
+    public static GameManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+                _instance = new GameManager();
+            return _instance;
+        }
+    }
+
+    private GameManager()
+    {
+        PreferencesLoad();
+    }
 
     public Preferences Preferences;
 
@@ -37,6 +56,8 @@ public class GameManager
     public ShopTypeCache ShopTypeCache;
     public TextureCache TextureCache;
     public WeightedStringListCache WeightedStringListCache;
+
+    
 
     public void CacheLocationsReset()
     {
@@ -66,6 +87,8 @@ public class GameManager
     public NPCsLibrary NPCsLibrary;
     public ProceduresLibrary ProceduresLibrary;
     public TemplateLibrary TemplateLibrary;
+
+    
     #endregion
     #region Servers
     //public DialogServer DialogServer;
@@ -73,16 +96,21 @@ public class GameManager
     public ModsServer ModsServer;
     #endregion
 
-    public string DataPath { get => Preferences.DataPath; }
+    //public string DataPath { get => Preferences.DataPath; }
+    public string DataPath { get; private set; }
 
-    public string QuicksavePath;
-
-    /*public TextMeshProUGUI TextBoxMain;
-    public string TextMain
+    public string QuicksavePath
     {
-        get => TextBoxMain.text;
-        set => TextBoxMain.text = value;
-    }*/
+        get
+        {
+            return GetSavegamePath("quicksave.json");
+        }
+    }
+
+    private string GetSavegamePath(string name)
+    {
+        return Path.Combine(Preferences.SavePath,name);
+    }
 
     public IEnumerable<Option> CurrentOptions
     {
@@ -116,18 +144,22 @@ public class GameManager
         }
     }
 
-    public string CurrentText
+    public CText CurrentText
     {
         get
         {
-            if (GameData.CurrentEventStage == null)
+            /*if (GameData.CurrentEventStage == null)
                 return GameData.CurrentLocation.Text.Text(GameData);
             else
-                return GameData.CurrentEventStage.Text.Text(GameData);
+                return GameData.CurrentEventStage.Text.Text(GameData);*/
+            if (GameData.CurrentEventStage == null)
+                return GameData.CurrentLocation.Text;
+            else
+                return GameData.CurrentEventStage.Text;
         }
     }
 
-    public ImageSource CurrentTexture{
+    public ModableTexture CurrentTexture{
         get
         {
             if (GameData.CurrentEventStage == null || GameData.CurrentEventStage.Texture == null)
@@ -139,8 +171,21 @@ public class GameManager
         }
     }
 
+    public IEnumerable<IMainContent> MainContent
+    {
+        get
+        {
+            var result = new List<IMainContent>();
 
-    public CultureInfo CultureInfo = CultureInfo.CreateSpecificCulture("en-US");
+            result.Add(CurrentTexture);
+            result.Add(CurrentText);
+
+            return result;
+        }
+    }
+
+
+    
 
     /*public GameObject SecondaryDisplayContent;
     private bool _secondaryDisplayActive;
@@ -184,113 +229,91 @@ public class GameManager
 
     public GameObject LoadingScreen;
 
+
     private bool uiUpdateBlocked = false;
     private bool uiUpdatePending;
     public List<UIUpdateListener> updateListeners;*/
 
+    
+
     public UISettings UISettings { get => GameData.UISettings; }
 
-    /*private void Awake()
+    public delegate void OnUIUpdate(GameData gameData,Preferences preferences);
+    public OnUIUpdate OnUIUpdateEvent = delegate { Debug.Log("UI-Update executed"); };
+
+
+    private const string _appdataPath = "BER2";
+    private const string _preferencesFileName = "preferences.json";
+    private readonly string _preferencesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), _appdataPath, _preferencesFileName);
+
+    internal bool TryLoadGameFromPreferences()
     {
-        LoadingScreen.SetActive(true);
+        string lastGamePath = Preferences.LastGame;
 
-        if (Instance == null) { Instance = this; } else { Debug.LogError("Error: multiple " + this + " in scene!"); }
-
-       
-        preferencesLoad();
-    }*/
-
-
-    private string _preferencesPath;
-
-    private void preferencesLoad() => preferencesLoad(Application.dataPath);
-
-    private void preferencesLoad(string path)
-    {
-        _preferencesPath = Path.Combine(path, "preferences.json");
-        if (!File.Exists(_preferencesPath))
+        if (File.Exists(lastGamePath))
         {
-            Preferences = new Preferences(path);
-            preferencesSave(_preferencesPath);
+            return OpenGame(lastGamePath);
+        }
+
+        return false;
+    }
+
+    private void PreferencesLoad() => PreferencesLoad(_preferencesPath);
+
+    private void PreferencesLoad(string path)
+    {
+        if (!File.Exists(path))
+        {
+            Preferences = new Preferences();
+            PreferencesSave(path);
         }
         else
         {
-            JObject jObject = File2Data(_preferencesPath);
+            JObject jObject = File2Data(path);
             Preferences = jObject.ToObject<Preferences>();
         }
 
-        Preferences.OnUpdate = delegate { preferencesSave(_preferencesPath);  };
     }
 
-    public void preferencesSave() => preferencesSave(_preferencesPath);
+    public void PreferencesSave() => PreferencesSave(_preferencesPath);
 
-    private void preferencesSave(string path)
+    private void PreferencesSave(string path)
     {
         Data2File(Preferences, path);
     }
 
-    void Start()
-    {
-        try
-        {
-            if (Display.displays.Length > 1)
-            {
-                SecondaryDisplayActive = true;
 
-            }
-
-
-            ModsServer = new ModsServer(path("mods"), Preferences);
-
-            loadStaticData();
-
-            StartMenu.show();
-
-            LoadingScreen.SetActive(false);
-
-            CharacterScreen.hide();
-            EditWindow.hide();
-            UIDialogue.hide();
-            UINotes.hide();
-        }
-        catch(Exception e)
-        {
-            LoadingScreen.SetActive(false);
-            ErrorMessage.Show(e.Message);
-            Debug.LogError(e);
-        }
-    }
-
-    public void loadStaticData()
+    private void LoadStaticData()
     {
         IEnumerable<string> modsPaths = ModsServer.ActivatedModsPaths;
 
         ActivityLibrary = new ActivityLibrary();
 
-        DialogueTopicLibrary = new DialogueTopicLibrary(path("dialogue/topics"), pathsMods(modsPaths, "dialogue/topics"));
+        DialogueTopicLibrary = new DialogueTopicLibrary(PathRelative("dialogue/topics"), pathsMods(modsPaths, "dialogue/topics"));
         Thread dialogueTopicLibraryLoadThread = DialogueTopicLibrary.loadThreaded();
 
-        FunctionsLibrary = new FunctionsLibrary(path("functions"), pathsMods(modsPaths, "functions"));
+        FunctionsLibrary = new FunctionsLibrary(PathRelative("functions"), pathsMods(modsPaths, "functions"));
         Thread functionsLibraryLoadThread = FunctionsLibrary.loadThreaded();
 
-        ItemsLibrary = new ItemsLibrary(path("items"), pathsMods(modsPaths, "items"));
+        ItemsLibrary = new ItemsLibrary(PathRelative("items"), pathsMods(modsPaths, "items"));
         Thread itemsLibraryLoadThread = ItemsLibrary.loadThreaded();
 
-        InterruptServer = new InterruptServer(path("interrupts"), pathsMods(modsPaths, "interrupts"));
+        InterruptServer = new InterruptServer(PathRelative("interrupts"), pathsMods(modsPaths, "interrupts"));
         Thread interruptServerLoadThread = InterruptServer.loadThreaded();
 
-        LocationTypeLibrary = new LocationTypeLibrary(path("locationtypes"), pathsMods(modsPaths, "locationtypes"));
+        LocationTypeLibrary = new LocationTypeLibrary(PathRelative("locationtypes"), pathsMods(modsPaths, "locationtypes"));
         Thread locationTypeLibraryLoadThread = LocationTypeLibrary.loadThreaded();
 
-        ProceduresLibrary = new ProceduresLibrary(path("procedures"), pathsMods(modsPaths, "procedures"));
+        ProceduresLibrary = new ProceduresLibrary(PathRelative("procedures"), pathsMods(modsPaths, "procedures"));
         Thread proceduresLibraryLoadThread = ProceduresLibrary.loadThreaded();
 
-        TemplateLibrary = new TemplateLibrary(path("templates"), pathsMods(modsPaths, "templates"));
+        TemplateLibrary = new TemplateLibrary(PathRelative("templates"), pathsMods(modsPaths, "templates"));
         Thread templateLibraryLoadThread = TemplateLibrary.loadThreaded();
 
-        Thread rawNPCsLoadThread = NPCsLibrary.loadRawNpcsThreaded(path("npcs"), pathsMods(modsPaths, "npcs"));
+        NPCsLibrary = new NPCsLibrary();
+        Thread rawNPCsLoadThread = NPCsLibrary.loadRawNpcsThreaded(PathRelative("npcs"), pathsMods(modsPaths, "npcs"));
         //NPCsLibrary.loadRawNpcsThreaded(path("npcs"), pathsMods(modsPaths, "npcs"));
-        Misc = File2Object<Misc>(path("misc.json"));
+        Misc = File2Object<Misc>(PathRelative("misc.json"));
 
 
         dialogueTopicLibraryLoadThread.Join();
@@ -303,15 +326,10 @@ public class GameManager
         templateLibraryLoadThread.Join();
     }
 
-    void Update()
-    {
-        if (uiUpdatePending && !uiUpdateBlocked)
-            _uiUpdate();
-    }
 
     public void CharacterScreenShow()
     {
-        CharacterScreen.show(PC);
+        //CharacterScreen.show(PC);
     }
 
     public void console(string command)
@@ -342,46 +360,46 @@ public class GameManager
     public void dialogueContinue(string topicID)
     {
 
-        UIDialogue.contin(topicID);
+        //UIDialogue.contin(topicID);
     }
 
     public void dialogueShow(NPC npc)
     {
-        UIDialogue.show(npc);
+        //UIDialogue.show(npc);
     }
 
     public void dialogueShow(NPC npc, DialogueTopic topic)
     {
-        UIDialogue.show(npc, topic);
+        //UIDialogue.show(npc, topic);
     }
 
     public void eventEnd()
     {
         GameData.CurrentEventStage = null;
-        uiUpdate();
+        UiUpdate();
     }
 
     public void eventExecute(string eventId)
     {
         EventStage eventStage = EventGroupCache.EventStage(eventId);
-        eventExecute(eventStage);
+        EventExecute(eventStage);
     }
 
-    public void eventExecute(string eventGroupId, string eventStageId)
+    public void EventExecute(string eventGroupId, string eventStageId)
     {
         EventStage eventStage = EventGroupCache.EventStage(eventGroupId, eventStageId);
-        eventExecute(eventStage);
+        EventExecute(eventStage);
     }
 
-    public void eventExecute(EventStage eventStage)
+    public void EventExecute(EventStage eventStage)
     {
         GameData.CurrentEventStage = eventStage;
         eventStage?.execute();
 
         if (GameData.CurrentEventStage != null)
-            UINPCsPresentContainer.setNPCs(new NPC[0]);
+            //UINPCsPresentContainer.setNPCs(new NPC[0]);
 
-        uiUpdate();
+        UiUpdate();
     }
 
     public static void Data2File(object value, string path)
@@ -390,10 +408,14 @@ public class GameManager
         {
             NullValueHandling = NullValueHandling.Ignore
         });
+
+        FileInfo fileInfo = new FileInfo(path);
+        fileInfo.Directory.Create();
+
         File.WriteAllText(path, json);
     }
 
-    public static JObject File2Data(string path)
+    public static JObject File2Data(string path, bool throwOnException = true)
     {
         if (!File.Exists(path))
             return new JObject();
@@ -404,28 +426,30 @@ public class GameManager
             var data = JObject.Parse(jsonString);
             return data;
         }
-        catch
+        catch(Exception e)
         {
+            if (throwOnException)
+                throw e;
             return new JObject();
         }
         
     }
 
-    public static T File2Object<T>(string path)
+    public static T File2Object<T>(string path, bool throwOnException = true)
     {
-        return File2Data(path).ToObject<T>();
+        return File2Data(path, throwOnException).ToObject<T>();
     }
 
-    public void gameLoad()
+    public void LoadSavegame()
     {
-        gameLoad(QuicksavePath);
+        LoadSavegame(QuicksavePath);
     }
 
-    public void gameLoad(string path)
+    public void LoadSavegame(string path)
     {
         try
         {
-            uiUpdateBlocked = true;
+            //uiUpdateBlocked = true;
 
             SaveFile saveFile = File2Object<SaveFile>(path);
             Debug.Log($"Game loaded from {path}");
@@ -452,7 +476,7 @@ public class GameManager
             if (problems.Count > 0)
             {
 
-                var dialogSettings = new YesNoDialogSettings();
+                /*var dialogSettings = new YesNoDialogSettings();
 
                 dialogSettings.Title = "Continue Loading?";
                 dialogSettings.Text = "Error while loading savegame. Load anyway?\n" + String.Join("\n",problems);
@@ -460,7 +484,7 @@ public class GameManager
                 dialogSettings.onYes = delegate { gameDataLoad(saveFile.GameData); };
                 dialogSettings.onNo = delegate { StartMenu.show(); };
 
-                DialogServer.dialogShow(DialogServer.YesNoDialog, dialogSettings);
+                DialogServer.dialogShow(DialogServer.YesNoDialog, dialogSettings);*/
             }
             else
             {
@@ -478,7 +502,7 @@ public class GameManager
         }
         finally
         {
-            uiUpdateBlocked = false;
+            //uiUpdateBlocked = false;
         }
     }
 
@@ -488,15 +512,15 @@ public class GameManager
         PC.id = "PC";
 
         npcsPresentUpdate();
-        uiUpdate();
+        UiUpdate();
         
 
-        OutfitWindow.setCharacter(PC);
+        //OutfitWindow.setCharacter(PC);
 
         
     }
 
-    public void gameNew()
+    public void NewGame()
     {
         GameData = new GameData();
 
@@ -506,32 +530,85 @@ public class GameManager
 
         GameData.NPCsActive["_PC"] = pc;
 
-        eventExecute("start", "main");
+        EventExecute("start", "main");
 
-        OutfitWindow.setCharacter(PC);
+        //OutfitWindow.setCharacter(PC);
     }
 
-    public void gameSave()
+    public void SaveSavegame()
     {
-        gameSave(QuicksavePath);
+        SaveSavegame(QuicksavePath);
     }
 
-    public void gameSave(string path)
+    public void SaveSavegame(string path)
     {
         SaveFile saveFile = new SaveFile();
         saveFile.GameData = GameData;
         saveFile.Mods = ModsServer.ActivatedModsInfo;
         saveFile.PlayerVersion = PlayerVersion;
         Data2File(saveFile, path);
-        Debug.Log($"Game save at {path}");
+        Debug.Log($"Game saved at {path}");
 
     }
+
+    private void InitializeCaches()
+    {
+        ConditionCache = new ConditionCache();
+        DialogueLineCache = new DialogueLineCache();
+        EventGroupCache = new EventGroupCache("events");
+        LocationCache = new LocationCache("locations");
+        NPCTemplateCache = new NPCTemplateCache("npctemplates");
+        ServicesCache = new ServicesCache("services");
+        ServicepointCache = new ServicepointCache("servicepoints");
+        ShopTypeCache = new ShopTypeCache("shoptypes");
+        TextureCache = new TextureCache();
+        WeightedStringListCache = new WeightedStringListCache();
+}
 
     public void itemBuy(Item item, int price)
     {
         if(!PC.itemHas(item) && moneyPay(price))
             PC.itemAdd(item);
-        uiUpdate();
+        UiUpdate();
+    }
+
+
+
+    internal bool OpenGame(string path)
+    {
+        try
+        {
+            Preferences = new Preferences(); //TODO
+
+            Manifest manifest = File2Object<Manifest>(path);
+
+            DataPath = Path.GetDirectoryName(path);
+
+            InitializeCaches();
+
+            ModsServer = new ModsServer(PathRelative("mods"), Preferences);
+
+            LoadStaticData();
+
+            Preferences.LastGame = path;
+
+            NewGame();
+
+            return true;
+        }
+        catch (FileNotFoundException)
+        {
+            ErrorMessage.Show($"Can't open game\nFile not found.\nPath:{path}");
+        }
+        catch (JsonException jsonException)
+        {
+            ErrorMessage.Show($"Can't open game\nError deserializing Manifest-file.\nError message:{jsonException.Message}");
+        }
+        catch (Exception e) {
+            ErrorMessage.Show(e);
+        }
+
+        return false;
     }
 
     public void locationGoto(string subLocationId, bool skipOnShow = false)
@@ -552,7 +629,7 @@ public class GameManager
         if(!skipOnShow)
             subLocation.onShowExecute(this);
 
-        uiUpdate();
+        UiUpdate();
     }
 
     public string npcActivity(string npcID)
@@ -606,10 +683,10 @@ public class GameManager
 
         GameData.NpcsPresent = npcs;
 
-        if (GameData.CurrentEventStage == null)
+        /*if (GameData.CurrentEventStage == null)
             UINPCsPresentContainer.setNPCs(GameData.NpcsPresent);
         else
-            UINPCsPresentContainer.setNPCs(new NPC[0]);
+            UINPCsPresentContainer.setNPCs(new NPC[0]);*/
     }
 
     public void locationTransfer(LocationConnection locationConnection)
@@ -628,7 +705,7 @@ public class GameManager
 
     internal void noteAdd(string noteID, string text)
     {
-        GameData.Notes[noteID] = new Note(text, GameData.WorldData.DateTime);
+        //GameData.Notes[noteID] = new Note(text, GameData.WorldData.DateTime);
     }
 
     internal void noteRemove(string noteID)
@@ -638,23 +715,29 @@ public class GameManager
 
     public void notesHide()
     {
-        UINotes.hide();
+        //UINotes.hide();
     }
 
     public void notesShow()
     {
-        UINotes.showNotes(GameData.Notes.Values);
+        //UINotes.showNotes(GameData.Notes.Values);
     }
 
     
 
-
+     
     public void outfitWindowShow(OutfitRequirement outfitRequirement, CommandsCollection onClose)
     {
-        OutfitWindow.show(outfitRequirement, onClose);
+        //OutfitWindow.show(outfitRequirement, onClose);
+        OutfitWindow outfitWindow = new OutfitWindow(PC);
+        outfitWindow.Owner = Application.Current.MainWindow;
+        outfitWindow.ShowDialog();
     }
 
-    public string path(string p)
+    /// <summary>
+    /// Returns a path in the current DATA-folder.
+    /// </summary>
+    public string PathRelative(string p)
     {
         return Path.Combine(DataPath,p);
     }
@@ -681,18 +764,18 @@ public class GameManager
         ProceduresLibrary.procedureExecute(procedureID, data, parameters);
     }
 
-    public void Quit()
+    /*public void Quit()
     {
         Application.Quit();
-    }
+    }*/
 
     public void Refresh()
     {
         CachesReset();
-        loadStaticData();
+        LoadStaticData();
 
         npcsPresentUpdate();
-        uiUpdate();
+        UiUpdate();
     }
 
     public void shopShow(string shopId)
@@ -703,19 +786,19 @@ public class GameManager
 
     public void shopShow(Shop shop)
     {
-        UiShopWindow.show(shop);
+        //UiShopWindow.show(shop);
     }
 
     public void servicepointShow(string id)
     {
-        UIServicesWindow.setCategories(ServicepointCache[id].ServiceCategories);
-        UIServicesWindow.show();
+        //UIServicesWindow.setCategories(ServicepointCache[id].ServiceCategories);
+        //UIServicesWindow.show();
     }
 
     public void timeAdd(int duration)
     {
         GameData.WorldData.DateTime += new TimeSpan(0,0,duration);
-        uiUpdate();
+        UiUpdate();
     }
 
     public int timeAgeYears(DateTime dateTime)
@@ -767,16 +850,16 @@ public class GameManager
 
         int days = (ageYearsAgo - ageP1YearsAgo).Days;
 
-        ageP1YearsAgo += new TimeSpan(UnityEngine.Random.Range(0,days),0,0,0);
+        //ageP1YearsAgo += new TimeSpan(UnityEngine.Random.Range(0,days),0,0,0);
 
         return ageP1YearsAgo;
 
     }
 
-    public void uiUpdate()
+    public void UiUpdate()
     {
-        uiUpdatePending = true;
-
+        //uiUpdatePending = true;
+        OnUIUpdateEvent(GameData,Preferences);
     }
 
     private void _uiUpdate()

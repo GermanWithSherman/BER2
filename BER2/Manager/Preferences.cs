@@ -1,26 +1,25 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
-using UnityEngine;
 
 [JsonObject(MemberSerialization.OptIn)]
 public class Preferences
 {
-    [JsonProperty]
-    public string DataPath;
-    [JsonProperty]
-    public string SavePath;
+    public Preferences()
+    {
+    }
 
-    //public Dictionary<string, bool> Mods = new Dictionary<string, bool>();
+    //public delegate void OnUpdateMethod();
+    //public OnUpdateMethod OnUpdate = delegate { };
 
-    public delegate void OnUpdateMethod ();
-    public OnUpdateMethod OnUpdate;
+
+    public CultureInfo CultureInfo = CultureInfo.CreateSpecificCulture("en-US");
 
     [JsonProperty("ActivatedModIDs")]
     private IList<string> _activatedModIDs = new List<string>();
-
-    
 
     public IList<string> ActivatedModIDs
     {
@@ -28,18 +27,43 @@ public class Preferences
         set
         {
             _activatedModIDs = value;
-            OnUpdate();
         }
     }
 
-
-    public Preferences()
+    [JsonProperty("LastGame")]
+    private string _lastGame;
+    public string LastGame
     {
+        get => _lastGame;
+        set
+        {
+            _lastGame = value;
+        }
     }
+
+    [JsonProperty("SavePath")]
+    private string _savePath;
+    public string SavePath
+    {
+        get
+        {
+            if (String.IsNullOrEmpty(_savePath))
+                return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "BER2");
+            return _savePath;
+        }
+        set => _savePath = value;
+    }
+
+    /*[JsonProperty]
+    public string DataPath;
+    [JsonProperty]
+    public string SavePath;
+
+    //public Dictionary<string, bool> Mods = new Dictionary<string, bool>();
 
     public Preferences(string path)
     {
         DataPath = Path.Combine(path, "data");
         SavePath = Path.Combine(path, "saves");
-    }
+    }*/
 }

@@ -1,14 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class Template : IModable
 {
     [JsonProperty("BackgroundColor")]
     private string _backgroundColorHTML = "fff";
 
-    private Color? _backgroundColorCache = null;
+    /*private Color _backgroundColorCache = null;
     [JsonIgnore]
     public Color BackgroundColor
     {
@@ -28,12 +27,12 @@ public class Template : IModable
             }
             return _backgroundColorCache.GetValueOrDefault();
         }
-    }
+    }*/
 
     [JsonProperty("Color")]
     private string _fontColorHTML = "fff";
 
-    private Color? _fontColorCache=null;
+    /*private Color? _fontColorCache=null;
     [JsonIgnore]
     public Color FontColor
     {
@@ -53,7 +52,7 @@ public class Template : IModable
             }
             return _fontColorCache.GetValueOrDefault();
         }
-    }
+    }*/
 
     public IModable copyDeep()
     {

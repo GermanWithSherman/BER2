@@ -7,20 +7,38 @@
         xmlns:ctext="clr-namespace:BER2.UI.EditTools.CText"
         xmlns:statusbar="clr-namespace:BER2.UI.GameWindow.Statusbar"
         mc:Ignorable="d"
-        Title="MainWindow" Height="315.319" Width="868.834">
+        Closing="Window_Closing"
+        Title="MainWindow" Height="315.319" Width="868.834" WindowState="Maximized">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
-                <MenuItem x:Name="menuNew" Header="_New" InputGestureText="Ctrl+N"></MenuItem>
+                <MenuItem x:Name="menuOpenGame" Header="Open Game" Click="menuOpenGame_Click"></MenuItem>
+                <Separator></Separator>
+                <MenuItem x:Name="menuLoadSaveQuick" Header="Load Savegame Quick" Click="menuLoadSaveQuick_Click" InputGestureText="F9"></MenuItem>
+                <MenuItem x:Name="menuSaveSaveQuick" Header="Save Savegame Quick" InputGestureText="F5" Click="menuSaveSaveQuick_Click"></MenuItem>
+                <MenuItem x:Name="menuLoadSave" Header="_Load Savegame" InputGestureText="Ctrl+L" Click="menuLoadSave_Click"></MenuItem>
+                <MenuItem x:Name="menuSaveSave" Header="_Save Savegame" Click="menuSaveSave_Click" InputGestureText="Ctrl+S"></MenuItem>
             </MenuItem>
         </Menu>
         <StatusBar DockPanel.Dock="Bottom" Height="20"></StatusBar>
         <DockPanel>
             <statusbar:Statusbar x:Name="Statusbar" DockPanel.Dock="Top"></statusbar:Statusbar>
-            <Button DockPanel.Dock="Left" Content="Locations"></Button>
-            <Button DockPanel.Dock="Right" Content="NPCs"></Button>
-            <Button DockPanel.Dock="Bottom" Content="Options"></Button>
-            <Button DockPanel.Dock="Top" Content="Content"></Button>
+
+            <ScrollViewer DockPanel.Dock="Left" VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="Locations"/>
+            </ScrollViewer>
+            <ScrollViewer DockPanel.Dock="Right" VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="NPCs"/>
+            </ScrollViewer>
+            <ScrollViewer DockPanel.Dock="Bottom" VerticalScrollBarVisibility="Auto">
+                <StackPanel x:Name="Options">
+                </StackPanel>
+            </ScrollViewer>
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel DockPanel.Dock="Top" x:Name="MainContent">
+                    <Image Source="https://docs.microsoft.com/_themes/docs.theme/master/de-de/_themes/styles/microsoft-logo-light.c77142eb.png" Width="300" />
+                </StackPanel>
+            </ScrollViewer>
         </DockPanel>
     </DockPanel>
 </Window>

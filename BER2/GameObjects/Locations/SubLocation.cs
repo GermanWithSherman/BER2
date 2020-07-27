@@ -17,7 +17,7 @@ public class SubLocation : IModable, IInheritable
 
     [JsonIgnore]
     //public Texture Texture { get => GameManager.Instance.TextureCache[TexturePath]; }
-    public ImageSource Texture { get => GameManager.Instance.TextureCache[TexturePath]; }
+    public ModableTexture Texture { get => GameManager.Instance.TextureCache[TexturePath]; }
     public Conditional<string> TexturePath;// = new Conditional<string>();
 
     [JsonIgnore]
@@ -25,7 +25,7 @@ public class SubLocation : IModable, IInheritable
     public string LocationTypeID;
 
     [JsonIgnore]
-    public ImageSource TexturePreview {
+    public ModableTexture TexturePreview {
         get
         {
             if(TexturePreviewPath != null)

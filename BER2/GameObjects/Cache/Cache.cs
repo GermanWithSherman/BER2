@@ -4,9 +4,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
-public abstract class Cache<T> : MonoBehaviour where T : class,IModable,new()
+public abstract class Cache<T> where T : class,IModable,new()
 {
     public string Folder;
 

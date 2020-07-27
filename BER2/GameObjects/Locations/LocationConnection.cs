@@ -3,8 +3,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-//using System.Runtime.Serialization;
-using UnityEngine;
 
 [System.Serializable]
 public class LocationConnection : IModable
@@ -28,7 +26,7 @@ public class LocationConnection : IModable
     public Conditional<string> TexturePath;
     public Conditional<bool> Visible;
 
-    public Texture Texture {
+    public ModableTexture Texture {
         get{
             if (TexturePath != null)
                 return GameManager.Instance.TextureCache[TexturePath];

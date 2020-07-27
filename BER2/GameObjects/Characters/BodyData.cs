@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using BER2.Util.Math;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 [Modable(ModableAttribute.FieldOptions.OptOut)]
 public class BodyData : Data, IModable, IModableAutofields
@@ -46,8 +46,8 @@ public class BodyData : Data, IModable, IModableAutofields
     [JsonIgnore]
     public float BMI
     {
-        get => (Weight / 1000f) / (Mathf.Pow(Height / 1000f, 2));
-        set => Weight = Mathf.RoundToInt(value * Mathf.Pow(Height / 1000f, 2) * 1000);
+        get => (Weight / 1000f) / (Mathb.Pow(Height / 1000f, 2));
+        set => Weight = Mathb.RoundToInt(value * Mathb.Pow(Height / 1000f, 2) * 1000);
     }
 
     [JsonIgnore]
@@ -118,7 +118,7 @@ public class BodyData : Data, IModable, IModableAutofields
             case "None":
                 return 0;
             default:
-                return UnityEngine.Random.Range(100, 1000);
+                return BER2.Util.Random.Random.Range(100, 1000);
 
         }
     }

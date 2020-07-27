@@ -1,7 +1,7 @@
-﻿using System;
+﻿using BER2.Util.Math;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class CommandSleep : Command
 {
@@ -28,7 +28,7 @@ public class CommandSleep : Command
 
         //https://stackoverflow.com/questions/17944/how-to-round-up-the-result-of-integer-division
         int requiredSleepSeconds = (1000000 - currentSleepStat - 1) / sleepActivity.statSleep + 1;
-        int maximumSleepSeconds = Mathf.CeilToInt(requiredSleepSeconds * MaxSleepFactor);
+        int maximumSleepSeconds = Mathb.CeilToInt(requiredSleepSeconds * MaxSleepFactor);
 
         if (!String.IsNullOrEmpty(AlarmTimeRef))
         {
@@ -46,7 +46,7 @@ public class CommandSleep : Command
         }
 
         if (duration > maximumSleepSeconds)
-            duration = UnityEngine.Random.Range(requiredSleepSeconds, maximumSleepSeconds);
+            duration = BER2.Util.Random.Random.Range(requiredSleepSeconds, maximumSleepSeconds);
 
         if (duration < 0)
             duration = requiredSleepSeconds;//= 3600; // TODO: calculate required sleep
@@ -63,7 +63,7 @@ public class CommandSleep : Command
         int duration25 = duration / 4;
         int duration75 = duration * 3 / 4;
 
-        int middleDuration = UnityEngine.Random.Range(duration25, duration75);
+        int middleDuration = BER2.Util.Random.Random.Range(duration25, duration75);
 
         result.Add(new CommandInterrupt("SleepStart"));
 

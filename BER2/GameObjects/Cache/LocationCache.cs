@@ -4,10 +4,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using UnityEngine;
 
 public class LocationCache : Cache<Location>
 {
+
+    public LocationCache(string folder)
+    {
+        Folder = folder;
+    }
 
     protected override Location create(string key)
     {

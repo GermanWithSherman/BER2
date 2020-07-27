@@ -6,9 +6,7 @@ using System.Linq;
 
 public class ItemsLibrary : Library<Item>
 {
-    //private Dictionary<string, Item> dict = new Dictionary<string, Item>();
-
-
+    
     public ItemsLibrary(string path, IEnumerable<string> modsPaths, bool loadInstantly = false)
     {
         this.path = path;
@@ -50,24 +48,4 @@ public class ItemsLibrary : Library<Item>
         return result;
     }
 
-    /*private void loadFromFolder(string path)
-    {
-        if (!Directory.Exists(path))
-        {
-            Debug.LogError($"Path {path} does not exist");
-            return;
-        }
-
-        string[] filePaths = Directory.GetFiles(path);
-
-        foreach (string filePath in filePaths)
-        {
-
-            JObject deserializationData = GameManager.File2Data(filePath);
-            ItemsFile itemsFile = deserializationData.ToObject<ItemsFile>();
-
-            add(itemsFile);
-        }
-
-    }*/
 }

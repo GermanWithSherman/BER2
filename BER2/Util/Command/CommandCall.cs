@@ -1,8 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-//[Modable(ModableAttribute.FieldOptions.OptOut)]
 public class CommandCall : Command, IModable//, IModableAutofields
 {
     public string ProcedureID;

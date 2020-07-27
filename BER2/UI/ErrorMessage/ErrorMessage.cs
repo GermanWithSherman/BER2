@@ -1,31 +1,36 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Windows;
 
-public class ErrorMessage : MonoBehaviour
+public class ErrorMessage
 {
-    public static ErrorMessage Instance;
 
-    //public TMPro.TextMeshProUGUI Text;
-
-    public ErrorDialog ErrorDialogPrefab;
-
-    private void Awake()
+    private static ErrorMessage _instance;
+    private static ErrorMessage Instance
     {
-        if (Instance == null) { Instance = this; } else { Debug.LogError("Error: multiple " + this + " in scene!"); }
+        get
+        {
+            if (_instance == null)
+                _instance = new ErrorMessage();
+            return _instance;
+        }
     }
 
 
-    public void show(string msg)
+    private void ShowError(string msg)
     {
-        ErrorDialog dialog = Instantiate(ErrorDialogPrefab, transform);
-        dialog.Text.text = msg;
-        //gameObject.SetActive(true);
+        MessageBox.Show(msg, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+    }
+
+    public static void Show(Exception e)
+    {
+        Show("Error:"+e.Message);
     }
 
     public static void Show(string msg)
     {
-        Instance?.show(msg);
+        Instance.ShowError(msg);
     }
 
 }
