@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:BER2.UI.OutfitWindow"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Button>
+    <Button Click="Button_Click">
         <StackPanel>
             <TextBlock x:Name="TextTitle" FontWeight="Bold" FontSize="26" HorizontalAlignment="Center">Body</TextBlock>
             <Image x:Name="Image" MaxHeight="300" MaxWidth="300" Source="https://docs.microsoft.com/_themes/docs.theme/master/de-de/_themes/styles/microsoft-logo-light.c77142eb.png"></Image>

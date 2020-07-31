@@ -1,5 +1,6 @@
 ﻿using BER2;
 using BER2.UI.OutfitWindow;
+using BER2.UI.Shopwindow;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -63,6 +64,8 @@ public class GameManager
     {
         LocationCache.Reset();
     }
+
+    
 
     public void CachesReset()
     {
@@ -565,7 +568,15 @@ public class GameManager
         WeightedStringListCache = new WeightedStringListCache();
 }
 
-    public void itemBuy(Item item, int price)
+    public bool TryBuyItem(Item item, int price)
+    {
+        if (price > PC.moneyCash)
+            return false;
+        BuyItem(item,price);
+        return true;
+    }
+
+    public void BuyItem(Item item, int price)
     {
         if(!PC.itemHas(item) && moneyPay(price))
             PC.itemAdd(item);
@@ -728,7 +739,7 @@ public class GameManager
     public void outfitWindowShow(OutfitRequirement outfitRequirement, CommandsCollection onClose)
     {
         //OutfitWindow.show(outfitRequirement, onClose);
-        OutfitWindow outfitWindow = new OutfitWindow(PC);
+        OutfitWindow outfitWindow = new OutfitWindow(PC, outfitRequirement, onClose);
         outfitWindow.Owner = Application.Current.MainWindow;
         outfitWindow.ShowDialog();
     }
@@ -763,10 +774,6 @@ public class GameManager
         ProceduresLibrary.procedureExecute(procedureID, data, parameters);
     }
 
-    /*public void Quit()
-    {
-        Application.Quit();
-    }*/
 
 
     /// <summary>
@@ -791,6 +798,8 @@ public class GameManager
     public void shopShow(Shop shop)
     {
         //UiShopWindow.show(shop);
+        ShopWindow shopWindow = new ShopWindow(shop);
+        shopWindow.ShowDialog();
     }
 
     public void servicepointShow(string id)

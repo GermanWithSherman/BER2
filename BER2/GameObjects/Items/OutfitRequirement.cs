@@ -74,4 +74,14 @@ public class OutfitRequirement : IModable
         AllowedStyles = Modable.mod(AllowedStyles, modOR.AllowedStyles);
         ForbiddenStyles = Modable.mod(ForbiddenStyles, modOR.ForbiddenStyles);
     }
+
+    public bool TryOrError(Outfit currentOutfit)
+    {
+        if (isValid(currentOutfit))
+            return true;
+
+        ErrorMessage.Show(Instruction);
+
+        return false;
+    }
 }

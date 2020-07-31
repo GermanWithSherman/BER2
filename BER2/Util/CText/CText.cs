@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using TheArtOfDev.HtmlRenderer.WPF;
 
 [JsonConverter(typeof(CTextConverter))]
 public class CText : IModable, IMainContent
@@ -208,8 +209,8 @@ public class CText : IModable, IMainContent
 
     public UIElement getVisual()
     {
-        TextBlock result = new TextBlock();
 
+        var result = new TheArtOfDev.HtmlRenderer.WPF.HtmlPanel();
         result.Text = Text();
 
         return result;

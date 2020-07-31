@@ -40,6 +40,13 @@ public class LocationConnection : IModable
     public string Type = "Walk";
     public bool interruptible = true;
 
+    public bool IsEnabled()
+    {
+        if (!TargetLocation.isOpen())
+            return false;
+        return true;
+    }
+
     public OutfitRequirement OutfitRequirement = new OutfitRequirement();
 
     [JsonProperty("Condition")]

@@ -30,6 +30,7 @@ namespace BER2.UI.GameWindow.Locations
             Image.Source = locationConnection.Texture;
             TextDestinationLabel.Text = locationConnection.Label;
             TextDuration.Text = locationConnection.Duration.ToString();
+            Button.IsEnabled = locationConnection.IsEnabled();
             Button.Click += delegate { locationConnection.execute(); };
         }
     }

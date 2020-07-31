@@ -7,7 +7,20 @@ public class ShopType : IModable
     [JsonIgnore]
     public string ID;
 
-    public ItemsFilter Filter;
+    [JsonIgnore]
+    public ItemsFilter Filter
+    {
+        get
+        {
+            if (_filter == null)
+                _filter = new ItemsFilter();
+            return _filter;
+        }
+        set => _filter = value;
+    }
+
+    [JsonProperty("Filter")]
+    private ItemsFilter _filter;
 
     public IModable copyDeep()
     {

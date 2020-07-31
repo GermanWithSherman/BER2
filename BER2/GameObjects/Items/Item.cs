@@ -11,7 +11,7 @@ public class Item : IModable
     public string Label;
     public string TexturePath;
 
-    public int Price = 100;
+    public int Price = 1000;
 
     public string Slot = "Clothes";
 

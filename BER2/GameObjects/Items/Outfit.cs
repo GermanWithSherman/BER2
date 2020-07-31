@@ -12,6 +12,7 @@ public class Outfit : IModable
 
     public string Gender = "None";
     public string Style = "Casual";
+    public int Skimpiness = 40;
 
     public Item this[string slot]
     {
@@ -74,6 +75,7 @@ public class Outfit : IModable
     private void update()
     {
         updateGender();
+        updateSkimpiness();
         updateStyle();
     }
 
@@ -132,6 +134,12 @@ public class Outfit : IModable
                 Gender = "mix";
         }
         Debug.Log($"New utfit gender: {Gender}");
+    }
+
+    private void updateSkimpiness()
+    {
+        Item clothes = items.getItem("Clothes");
+        Skimpiness = clothes.Skimpiness;
     }
 
     private void updateStyle()

@@ -19,49 +19,66 @@ namespace BER2.UI.OutfitWindow
     /// </summary>
     public partial class OutfitWindow : Window
     {
-
+        private PC _character;
         private IDictionary<string, OutfitItemButton> _slotButton;
+        private OutfitRequirement _outfitRequirement;
+        private CommandsCollection _onClose;
 
         public OutfitWindow()
         {
             InitializeComponent();
 
             _slotButton = new Dictionary<string, OutfitItemButton>();
-            _slotButton["Body"] = ButtonBody;
+            _slotButton["Clothes"] = ButtonBody;
             _slotButton["Bra"] = ButtonBra;
             _slotButton["Panties"] = ButtonPanties;
             _slotButton["Shoes"] = ButtonShoes;
 
-            foreach (KeyValuePair<string,OutfitItemButton> keyValue in _slotButton)
-            {
-                keyValue.Value.Label = keyValue.Key;
-            }
-            /*ButtonBody.Label = "Body";
-            ButtonBra.Label = "Bra";
-            ButtonPanties.Label = "Panties";
-            ButtonShoes.Label = "Shoes";*/
         }
 
-        public OutfitWindow(PC character) : this()
+        private OutfitWindow(PC character) : this()
         {
-            /*ButtonBody.SetItem(character.CurrentOutfit["Body"]);
-            ButtonBra.SetItem(character.CurrentOutfit["Bra"]);
-            ButtonPanties.SetItem(character.CurrentOutfit["Panties"]);
-            ButtonShoes.SetItem(character.CurrentOutfit["Shoes"]);*/
+            _character = character;
             foreach (KeyValuePair<string, OutfitItemButton> keyValue in _slotButton)
             {
-                /*Item item = character.CurrentOutfit[keyValue.Key];
-                if (item == null)
-                {
-                    keyValue.Value.Texture = character.GetClothingslotTexture(keyValue.Key);
-                    keyValue.Value.ItemName = "";
-                    return;
-                }*/
-                keyValue.Value.Texture = character.GetClothingslotTexture(keyValue.Key);
-                keyValue.Value.ItemName = "";
-
-
+                keyValue.Value.Initialize(this,keyValue.Key, character);
             }
+            Update();
+        }
+
+        public OutfitWindow(PC character, OutfitRequirement outfitRequirement, CommandsCollection onClose) : this(character)
+        {
+            _outfitRequirement = outfitRequirement;
+            _onClose = onClose;
+        }
+
+        public void Update()
+        {
+            TextGender.Text = _character.GenderDress;
+            TextStyle.Text = _character.CurrentOutfit.Style;
+            TextGenderAppear.Text = _character.GenderPerceived;
+
+            if(_character.CurrentOutfit.Skimpiness > 0)
+            {
+                WidgetSkimpiness.Visibility = Visibility.Visible;
+                TextSkimpiness.Text = BER2.Language.Language.Skimpiness(_character.CurrentOutfit.Skimpiness);
+            }
+            else
+            {
+                WidgetSkimpiness.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (!_outfitRequirement.TryOrError(_character.CurrentOutfit))
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            _onClose.execute();
+
         }
     }
 }

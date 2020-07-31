@@ -5,26 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BER2.UI.OutfitWindow" xmlns:npcs="clr-namespace:BER2.UI.GameWindow.NPCs"
         mc:Ignorable="d"
-        Title="OutfitWindow" Height="450" Width="800" WindowStartupLocation="CenterOwner">
+        Title="OutfitWindow" Height="450" Width="800" WindowStartupLocation="CenterOwner" Closing="Window_Closing">
     <DockPanel>
         <ScrollViewer x:Name="Outfits" DockPanel.Dock="Left">
             <StackPanel>
                 <Button>asdasdasdas</Button>
             </StackPanel>
         </ScrollViewer>
+        <StackPanel DockPanel.Dock="Right">
+            <TextBlock>This Outfit is considered</TextBlock>
+            <TextBlock FontWeight="Bold" Name="TextStyle">OutfitStyle</TextBlock>
+            <TextBlock FontWeight="Bold" Name="TextGender">OutfitGender</TextBlock>
+            <TextBlock>You appear as</TextBlock>
+            <TextBlock FontWeight="Bold" Name="TextGenderAppear">Appearnce</TextBlock>
+            <StackPanel x:Name="WidgetSkimpiness">
+                <TextBlock>Skimpiness:</TextBlock>
+                <TextBlock FontWeight="Bold" Name="TextSkimpiness">Skimpiness</TextBlock>
+            </StackPanel>
+        </StackPanel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <local:OutfitItemButton x:Name="ButtonBody" Grid.Column="0" Grid.Row="0"></local:OutfitItemButton>
-            <local:OutfitItemButton x:Name="ButtonBra" Grid.Column="1" Grid.Row="0"></local:OutfitItemButton>
-            <local:OutfitItemButton x:Name="ButtonShoes" Grid.Column="0" Grid.Row="1"></local:OutfitItemButton>
-            <local:OutfitItemButton x:Name="ButtonPanties" Grid.Column="1" Grid.Row="1"></local:OutfitItemButton>
+            <TextBlock Text="Clothes" TextAlignment="Right" Grid.Row="0" Grid.Column="0"></TextBlock>
+            <local:OutfitItemButton x:Name="ButtonBody" Grid.Row="0" Grid.Column="1"></local:OutfitItemButton>
+            <TextBlock Text="Shoes" TextAlignment="Right" Grid.Row="1" Grid.Column="0"></TextBlock>
+            <local:OutfitItemButton x:Name="ButtonShoes" Grid.Row="1" Grid.Column="1"></local:OutfitItemButton>
+            <TextBlock Text="Bra" TextAlignment="Right" Grid.Row="2" Grid.Column="0"></TextBlock>
+            <local:OutfitItemButton x:Name="ButtonBra" Grid.Row="2" Grid.Column="1"></local:OutfitItemButton>
+            <TextBlock Text="Panties" TextAlignment="Right" Grid.Row="3" Grid.Column="0"></TextBlock>
+            <local:OutfitItemButton x:Name="ButtonPanties" Grid.Row="3" Grid.Column="1"></local:OutfitItemButton>
         </Grid>
+        </ScrollViewer>
     </DockPanel>
 </Window>
