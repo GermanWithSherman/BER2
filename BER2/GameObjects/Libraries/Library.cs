@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using System.Windows.Diagnostics;
 
 public interface ILibrary
 {
@@ -71,7 +72,14 @@ public abstract class Library<T>: ILibrary where T : IModable, new()
         }
 
         _dict = original;
+
+        Loaded();
     }
+
+    /// <summary>
+    /// Called after loading completed.
+    /// </summary>
+    protected virtual void Loaded(){}
 
     protected virtual ModableObjectHashDictionary<T> loadFromFolder(string path)
     {

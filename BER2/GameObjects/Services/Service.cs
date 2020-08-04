@@ -1,45 +1,49 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-[Modable(ModableAttribute.FieldOptions.OptOut)]
-public class Service : IModable, IModableAutofields
+namespace BER2.GameObjects.Services
 {
-    public string Label;
 
-    public CText Description = new CText();
-
-    public int Price;
-    public string Category;
-
-    public bool StayOpen = false;
-
-    public CommandsCollection onBuy = new CommandsCollection();
-
-    public void buy()
+    [Modable(ModableAttribute.FieldOptions.OptOut)]
+    public class Service : IModable, IModableAutofields
     {
-        GameManager.Instance.PC.moneyPay(Price);
+        public string Label;
 
-        execute();
+        public CText Description = new CText();
 
-        /*if (!StayOpen)
-            GameManager.Instance.UIServicesWindow.hide();*/
-    }
+        public int Price;
+        public string Category;
 
-    public IModable copyDeep()
-    {
-        throw new System.NotImplementedException();
-    }
+        public bool StayOpen = false;
 
-    public void mod(IModable modable)
-    {
-        throw new System.NotImplementedException();
-    }
+        public CommandsCollection onBuy = new CommandsCollection();
 
-    private void execute()
-    {
-        foreach (Command command in onBuy.Values)
+        public void buy()
         {
-            command.execute();
+            GameManager.Instance.PC.moneyPay(Price);
+
+            execute();
+
+            /*if (!StayOpen)
+                GameManager.Instance.UIServicesWindow.hide();*/
+        }
+
+        public IModable copyDeep()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void mod(IModable modable)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void execute()
+        {
+            foreach (Command command in onBuy.Values)
+            {
+                command.execute();
+            }
         }
     }
 }

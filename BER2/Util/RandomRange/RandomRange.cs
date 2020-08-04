@@ -28,22 +28,22 @@ public class RandomRange
 
     public float getFloat()
     {
-        return BER2.Util.Random.Random.Range(_min,_max);
+        return BER2.Util.Randomness.Random.Range(_min,_max);
     }
 
     public float? getFloatNullable()
     {
-        return BER2.Util.Random.Random.Range(_min, _max);
+        return BER2.Util.Randomness.Random.Range(_min, _max);
     }
 
     public int getInt()
     {
-        return BER2.Util.Random.Random.Range((int)_min, (int)_max);
+        return BER2.Util.Randomness.Random.Range((int)_min, (int)_max);
     }
 
     public int? getIntNullable()
     {
-        return BER2.Util.Random.Random.Range((int)_min, (int)_max);
+        return BER2.Util.Randomness.Random.Range((int)_min, (int)_max);
     }
 }
 

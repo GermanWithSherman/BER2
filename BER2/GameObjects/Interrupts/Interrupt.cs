@@ -45,7 +45,7 @@ public class Interrupt : IModable, IModableAutofields
 
     public bool trySelect()
     {
-        float random = BER2.Util.Random.Random.Range(0f,1f);
+        float random = BER2.Util.Randomness.Random.Range(0f,1f);
         if (random > Chance)
             return false;
         if (GameManager.Instance.GameData.Interrupts.remainingCooldown(this) > 0)

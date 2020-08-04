@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BER2.GameObjects.Effects;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
@@ -75,7 +76,36 @@ public class NPC : Data, IInheritable, IModable, IModableAutofields
     [JsonIgnore]
     public string Name => _nameCached.getValue(this);
 
-    //public bool ShouldSerializeNameNick() => false;
+    #region Effects
+    private IList<Effect> _effects;
+    [JsonIgnore]
+    public IList<Effect> Effects
+    {
+        get
+        {
+            if (_effects == null)
+                _effects = GameManager.Instance.EffectsLibrary.IdsToEntrys(_effectsIds);
+            return _effects;
+        }
+    }
+
+    [JsonProperty("Effects")]
+    private IEnumerable<string> _effectsSerialization
+    {
+        get
+        {
+            var result = new List<string>();
+            foreach(Effect effect in Effects)
+            {
+                result.Add(effect.ID);
+            }
+            return result;
+        }
+        set => _effectsIds = value;
+    }
+    private IEnumerable<string> _effectsIds;
+    #endregion
+
 
     [JsonProperty("DialogueColor")]
     public string _dialogueColor;

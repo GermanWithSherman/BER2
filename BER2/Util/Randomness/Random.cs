@@ -4,7 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BER2.Util.Random {
+namespace BER2.Util.Randomness
+{
     internal class Random
     {
         private static System.Random _random = new System.Random();

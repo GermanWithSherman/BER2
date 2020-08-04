@@ -118,7 +118,7 @@ public class BodyData : Data, IModable, IModableAutofields
             case "None":
                 return 0;
             default:
-                return BER2.Util.Random.Random.Range(100, 1000);
+                return BER2.Util.Randomness.Random.Range(100, 1000);
 
         }
     }

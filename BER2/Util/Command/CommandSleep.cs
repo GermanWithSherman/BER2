@@ -46,7 +46,7 @@ public class CommandSleep : Command
         }
 
         if (duration > maximumSleepSeconds)
-            duration = BER2.Util.Random.Random.Range(requiredSleepSeconds, maximumSleepSeconds);
+            duration = BER2.Util.Randomness.Random.Range(requiredSleepSeconds, maximumSleepSeconds);
 
         if (duration < 0)
             duration = requiredSleepSeconds;//= 3600; // TODO: calculate required sleep
@@ -63,7 +63,7 @@ public class CommandSleep : Command
         int duration25 = duration / 4;
         int duration75 = duration * 3 / 4;
 
-        int middleDuration = BER2.Util.Random.Random.Range(duration25, duration75);
+        int middleDuration = BER2.Util.Randomness.Random.Range(duration25, duration75);
 
         result.Add(new CommandInterrupt("SleepStart"));
 

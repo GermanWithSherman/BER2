@@ -1,0 +1,74 @@
+﻿<Window x:Class="BER2.UI.Character.CharacterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BER2.UI.Character"
+        mc:Ignorable="d"
+        Title="CharacterWindow" Height="450" Width="800">
+    <TabControl>
+        <TabItem Header="Overview">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Label Grid.Row="0">First Name:</Label>
+                <TextBlock x:Name="TextNameFirst" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">First Name</TextBlock>
+                <Label Grid.Row="1">Last Name:</Label>
+                <TextBlock x:Name="TextNameLast" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">Last Name</TextBlock>
+            </Grid>
+        </TabItem>
+        <TabItem Header="Appearance">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label>Total Attractiveness:</Label>
+                    <Label x:Name="LabelTotalAttractiveness">100</Label>
+                </StackPanel>    
+            
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" ToolTip="The gender you appear as according to your facial and body features.">Gender:</Label>
+                    <TextBlock x:Name="TextAppearanceGender" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">Male</TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" ToolTip="The gender does not affect your attractiveness but the factors that are taken into account.">0</TextBlock>
+
+                    <Label Grid.Row="1" ToolTip="How old you look.">Age:</Label>
+                    <TextBlock x:Name="TextAppearanceAge" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">18</TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" ToolTip="NPCs will compare your age to their own. Male characters usually find young women more attractive while women find men around or slightly above their own age most attractive.">0</TextBlock>
+
+
+                    <Label Grid.Row="2">Facial Features:</Label>
+
+                    <Label Grid.Row="3">Facial Scars:</Label>
+
+                    <Label Grid.Row="4">Facial Impurities:</Label>
+                
+                
+                
+                </Grid>
+            </StackPanel>
+        </TabItem>
+    </TabControl>
+</Window>

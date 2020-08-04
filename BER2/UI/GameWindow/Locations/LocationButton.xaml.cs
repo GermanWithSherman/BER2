@@ -31,7 +31,7 @@ namespace BER2.UI.GameWindow.Locations
             TextDestinationLabel.Text = locationConnection.Label;
             TextDuration.Text = locationConnection.Duration.ToString();
             Button.IsEnabled = locationConnection.IsEnabled();
-            Button.Click += delegate { locationConnection.execute(); };
+            Button.Click += delegate { locationConnection.execute(); GameManager.Instance.Update(); };
         }
     }
 }

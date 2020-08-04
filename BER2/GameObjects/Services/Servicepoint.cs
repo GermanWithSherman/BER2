@@ -2,55 +2,59 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Servicepoint : IModable
+namespace BER2.GameObjects.Services
 {
-    public ModableStringList ServiceIDs;
-    [JsonIgnore]
-    public List<Service> Services
+
+    public class Servicepoint : IModable
     {
-        get
+        public ModableStringList ServiceIDs;
+        [JsonIgnore]
+        public List<Service> Services
         {
-            List<Service> result = new List<Service>();
-
-            foreach(string serviceId in ServiceIDs)
+            get
             {
-                result.Add(GameManager.Instance.ServicesCache.service(serviceId));
-            }
-            //TODO: Cache result
-            return result;
-        }
-    }
+                List<Service> result = new List<Service>();
 
-    [JsonIgnore]
-    public IEnumerable<ServiceCategory> ServiceCategories
-    {
-        get
+                foreach (string serviceId in ServiceIDs)
+                {
+                    result.Add(GameManager.Instance.ServicesCache.service(serviceId));
+                }
+                //TODO: Cache result
+                return result;
+            }
+        }
+
+        [JsonIgnore]
+        public IEnumerable<ServiceCategory> ServiceCategories
         {
-            Dictionary<string,ServiceCategory> result = new Dictionary<string, ServiceCategory>();
-
-            foreach(Service service in Services)
+            get
             {
-                string cat = service.Category;
-                ServiceCategory serviceCategory;
-                if (!result.ContainsKey(cat))
-                    result.Add(cat, new ServiceCategory(cat));
-                serviceCategory = result[cat];
-                serviceCategory.Services.Add(service);
+                Dictionary<string, ServiceCategory> result = new Dictionary<string, ServiceCategory>();
+
+                foreach (Service service in Services)
+                {
+                    string cat = service.Category;
+                    ServiceCategory serviceCategory;
+                    if (!result.ContainsKey(cat))
+                        result.Add(cat, new ServiceCategory(cat));
+                    serviceCategory = result[cat];
+                    serviceCategory.Services.Add(service);
+                }
+
+                return result.Values;
             }
-
-            return result.Values;
         }
-    }
 
-    public string Title;
+        public string Title;
 
-    public void mod(IModable modable)
-    {
-        throw new System.NotImplementedException();
-    }
+        public void mod(IModable modable)
+        {
+            throw new System.NotImplementedException();
+        }
 
-    public IModable copyDeep()
-    {
-        throw new System.NotImplementedException();
+        public IModable copyDeep()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

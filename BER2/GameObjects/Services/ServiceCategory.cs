@@ -1,19 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-public class ServiceCategory //: IPanelData
+namespace BER2.GameObjects.Services
 {
-    public string Title;
-
-    public List<Service> Services = new List<Service>();
-
-    public ServiceCategory(string title)
+    public class ServiceCategory //: IPanelData
     {
-        Title = title;
-    }
+        public string Title;
 
-    public string title()
-    {
-        return Title;
+        public List<Service> Services = new List<Service>();
+
+        public ServiceCategory(string title)
+        {
+            Title = title;
+        }
+
+        public string title()
+        {
+            return Title;
+        }
     }
 }

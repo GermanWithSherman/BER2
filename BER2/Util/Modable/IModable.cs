@@ -13,6 +13,9 @@ public interface IModable
     IModable copyDeep();
 }
 
+/// <summary>
+/// Classes implementing IModableAutofields will have their copy- and mod-functionality handled by autofields.
+/// </summary>
 public interface IModableAutofields { }
 
 [AttributeUsage(AttributeTargets.Field, Inherited = true, AllowMultiple = false)]

@@ -1,5 +1,8 @@
 ﻿using BER2;
+using BER2.GameObjects.Effects;
+using BER2.GameObjects.Services;
 using BER2.UI.OutfitWindow;
+using BER2.UI.Services;
 using BER2.UI.Shopwindow;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -84,6 +87,7 @@ public class GameManager
     #region Libraries
     public ActivityLibrary ActivityLibrary;
     public DialogueTopicLibrary DialogueTopicLibrary;
+    public EffectsLibrary EffectsLibrary;
     public FunctionsLibrary FunctionsLibrary;
     public ItemsLibrary ItemsLibrary;
     public LocationTypeLibrary LocationTypeLibrary;
@@ -295,6 +299,9 @@ public class GameManager
         DialogueTopicLibrary = new DialogueTopicLibrary(PathRelative("dialogue/topics"), pathsMods(modsPaths, "dialogue/topics"));
         Thread dialogueTopicLibraryLoadThread = DialogueTopicLibrary.loadThreaded();
 
+        EffectsLibrary = new EffectsLibrary(PathRelative("effects"), pathsMods(modsPaths, "effects"));
+        Thread effectsLibraryLoadThread = EffectsLibrary.loadThreaded();
+
         FunctionsLibrary = new FunctionsLibrary(PathRelative("functions"), pathsMods(modsPaths, "functions"));
         Thread functionsLibraryLoadThread = FunctionsLibrary.loadThreaded();
 
@@ -320,6 +327,7 @@ public class GameManager
 
 
         dialogueTopicLibraryLoadThread.Join();
+        effectsLibraryLoadThread.Join();
         functionsLibraryLoadThread.Join();
         itemsLibraryLoadThread.Join();
         interruptServerLoadThread.Join();
@@ -379,7 +387,6 @@ public class GameManager
     public void eventEnd()
     {
         GameData.CurrentEventStage = null;
-        UiUpdate();
     }
 
     public void eventExecute(string eventId)
@@ -399,10 +406,9 @@ public class GameManager
         GameData.CurrentEventStage = eventStage;
         eventStage?.execute();
 
-        if (GameData.CurrentEventStage != null)
+        //if (GameData.CurrentEventStage != null)
             //UINPCsPresentContainer.setNPCs(new NPC[0]);
 
-        UiUpdate();
     }
 
     public static void Data2File(object value, string path)
@@ -515,7 +521,7 @@ public class GameManager
         PC.id = "PC";
 
         npcsPresentUpdate();
-        UiUpdate();
+        //Update();
         
 
         //OutfitWindow.setCharacter(PC);
@@ -580,7 +586,7 @@ public class GameManager
     {
         if(!PC.itemHas(item) && moneyPay(price))
             PC.itemAdd(item);
-        UiUpdate();
+        //Update();
     }
 
 
@@ -639,7 +645,7 @@ public class GameManager
         if(!skipOnShow)
             subLocation.onShowExecute(this);
 
-        UiUpdate();
+        //Update();
     }
 
     public string npcActivity(string npcID)
@@ -786,7 +792,7 @@ public class GameManager
         LoadStaticData();
 
         npcsPresentUpdate();
-        UiUpdate();
+        Update();
     }
 
     public void shopShow(string shopId)
@@ -806,12 +812,19 @@ public class GameManager
     {
         //UIServicesWindow.setCategories(ServicepointCache[id].ServiceCategories);
         //UIServicesWindow.show();
+        ServicepointShow(ServicepointCache[id]);
+    }
+
+    public void ServicepointShow(Servicepoint servicepoint)
+    {
+        var servicesWindow = new ServicesWindow(servicepoint);
+        servicesWindow.ShowDialog();
     }
 
     public void timeAdd(int duration)
     {
         GameData.WorldData.DateTime += new TimeSpan(0,0,duration);
-        UiUpdate();
+        //Update();
     }
 
     public int timeAgeYears(DateTime dateTime)
@@ -863,39 +876,25 @@ public class GameManager
 
         int days = (ageYearsAgo - ageP1YearsAgo).Days;
 
-        //ageP1YearsAgo += new TimeSpan(UnityEngine.Random.Range(0,days),0,0,0);
+        ageP1YearsAgo += new TimeSpan(BER2.Util.Randomness.Random.Range(0,days),0,0,0);
 
         return ageP1YearsAgo;
 
     }
 
-    public void UiUpdate()
+
+    private bool _updateState;
+
+    public void Update()
     {
-        //uiUpdatePending = true;
+
+        EffectsLibrary.UpdatePCEffects(PC, GameData, Effect.EffectTrigger.State);
+        UiUpdate();
+    }
+
+    private void UiUpdate()
+    {
         OnUIUpdateEvent(GameData,Preferences);
     }
-
-    private void _uiUpdate()
-    {
-        try
-        {
-            /*DataCache.Reset();
-
-            Debug.Log($"DayNight: {Misc.dayNightState(GameData.WorldData.DateTime)}");
-
-
-            uiUpdatePending = false;
-
-            foreach (UIUpdateListener listener in updateListeners)
-            {
-                listener.uiUpdate(this);
-            }*/
-        }
-        catch(Exception e)
-        {
-            ErrorMessage.Show($"Error performing UI-Update:\n{e}");
-        }
-    }
-
     
 }

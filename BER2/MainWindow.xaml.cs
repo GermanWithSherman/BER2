@@ -32,6 +32,8 @@ namespace BER2
 
             if(!TryLoadGameFromPreferences())
                 ShowOpenGameDialog();
+
+            GameManager.Instance.Update();
         }
 
         private void SetMainContent(IEnumerable<IMainContent> contents)
@@ -58,11 +60,19 @@ namespace BER2
 
             foreach (Option option in options)
             {
+                if (!option.Visible)
+                    continue;
+
                 Button button = new Button();
 
                 button.Content = option.Text.Text();
 
-                button.Click += delegate { option.Commands.execute(); };
+                if (option.Enabled)
+                    button.Click += delegate { option.Commands.execute(); GameManager.Instance.Update(); };
+                else
+                    button.IsEnabled = false;
+
+                
 
                 Options.Children.Add(button);
             }
@@ -86,6 +96,7 @@ namespace BER2
         private void OpenGame(string path)
         {
             GameManager.Instance.OpenGame(path);
+            GameManager.Instance.Update();
         }
 
         public void UIUpdate(GameData gameData,Preferences preferences)
@@ -102,7 +113,8 @@ namespace BER2
                 NPCs.Children.Add(npcButton);
             }
 
-            Statusbar.StatusTime.Content = gameData.WorldData.DateTime.ToString("F", preferences.CultureInfo);
+            //Statusbar.StatusTime.Content = gameData.WorldData.DateTime.ToString("F", preferences.CultureInfo);
+            Statusbar.Update(gameData,preferences);
         }
 
         private void SetLocations(IEnumerable<LocationConnection> locationConnections)
@@ -143,6 +155,7 @@ namespace BER2
         private void menuLoadSaveQuick_Click(object sender, RoutedEventArgs e)
         {
             GameManager.Instance.LoadSavegame();
+            GameManager.Instance.Update();
         }
 
         

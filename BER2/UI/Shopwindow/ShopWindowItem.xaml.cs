@@ -52,8 +52,11 @@ namespace BER2.UI.Shopwindow
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if(GameManager.Instance.TryBuyItem(_item, _item.Price))
+            if (GameManager.Instance.TryBuyItem(_item, _item.Price))
+            {
                 _shopWindow.Update();
+                GameManager.Instance.Update();
+            }
         }
     }
 }

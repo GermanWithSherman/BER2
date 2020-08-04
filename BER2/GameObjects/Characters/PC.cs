@@ -1,4 +1,5 @@
-﻿using BER2.Util.Math;
+﻿using BER2.GameObjects.Effects;
+using BER2.Util.Math;
 using Newtonsoft.Json;
 using System;
 using System.Collections;
@@ -13,18 +14,6 @@ public class PC : NPC
     public ItemsCollection items = new ItemsCollection();
 
     public Dictionary<string,Outfit> outfits = new Dictionary<string, Outfit>();
-    //public string currentOutfitId="DEFAULT";
-
-    /*[JsonIgnore]
-    public Outfit currentOutfit
-    {
-        get
-        {
-            if (!outfits.ContainsKey(currentOutfitId))
-                outfits[currentOutfitId] = new Outfit();
-            return outfits[currentOutfitId];
-        }
-    }*/
 
     public Outfit CurrentOutfit = new Outfit();
 
@@ -78,6 +67,18 @@ public class PC : NPC
 
     public int StatSatisfaction;
     private int _statSatisfaction { get => StatSatisfaction; set => StatSatisfaction = Mathb.Clamp(value, 0, 1000000); }
+
+    /*[JsonIgnore]
+    public int Distress
+    {
+        get => _distress;
+    }
+    [JsonProperty("Distress")]
+    private int _distress;*/
+
+    public int Attractiveness { get; private set; }
+    public int Distress { get; private set; }
+    
 
     public override bool ShouldSerializeTexturePath() => true;
 
@@ -144,6 +145,27 @@ public class PC : NPC
 
         setNPCData(key, value);
     }
+
+    public void EffectDeactivate(Effect effect)
+    {
+        if (!Effects.Contains(effect))
+            return;
+
+        Effects.Remove(effect);
+        Attractiveness -= effect.Attractiveness;
+        Distress -= effect.Distress;
+    }
+
+    public void EffectActivate(Effect effect)
+    {
+        if (Effects.Contains(effect))
+            return;
+
+        Effects.Add(effect);
+        Attractiveness += effect.Attractiveness;
+        Distress += effect.Distress;
+    }
+
 
     public ModableTexture GetClothingslotTexture(string slot)
     {
@@ -227,7 +249,7 @@ public class PC : NPC
     public void moneyPay(long amount)
     {
         moneyCash -= amount;
-        GameManager.Instance.UiUpdate();
+        //GameManager.Instance.Update();
     }
 
     public void timeDayPass()

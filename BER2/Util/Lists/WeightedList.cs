@@ -38,7 +38,7 @@ public class WeightedList<T> : IModable
         if(items.Count == 0)
             return default;
 
-        int r = BER2.Util.Random.Random.Range(1,weightSum);
+        int r = BER2.Util.Randomness.Random.Range(1,weightSum);
 
         foreach(WeightedListItem<T> item in items)
         {

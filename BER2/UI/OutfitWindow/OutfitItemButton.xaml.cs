@@ -79,6 +79,7 @@ namespace BER2.UI.OutfitWindow
                 _character.CurrentOutfit.setItem(_slot, item);
                 Update();
                 _outfitWindow.Update();
+                GameManager.Instance.Update();
             }
         }
     }

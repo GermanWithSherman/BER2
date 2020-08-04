@@ -6,14 +6,18 @@
              xmlns:local="clr-namespace:BER2.UI.GameWindow.Statusbar"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+    
         <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Center">
             <Label Content="Time:"/>
             <Label x:Name="StatusTime" Content="00:00:00 01.01.1970"/>
-        </StackPanel>
-    </Grid>
+            <Label Content="Hunger:" Margin="10,0,0,0"/>
+            <Label x:Name="StatusHunger" Content="100%"/>
+            <Label Content="Sleep:" Margin="10,0,0,0"/>
+            <Label x:Name="StatusSleep" Content="100%"/>
+            <Label Content="Distress:" Margin="10,0,0,0"/>
+            <Label x:Name="StatusDistress" Content="0%"/>
+            <StackPanel x:Name="EffectIconContainer" Orientation="Horizontal"></StackPanel>
+        <Button x:Name="ButtonCharacter" Content="Character" Click="ButtonCharacter_Click"></Button>
+    </StackPanel>
+    
 </UserControl>

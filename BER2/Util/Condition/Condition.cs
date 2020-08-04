@@ -432,8 +432,8 @@ public class Condition : IModable
                         if (rightValue <= left)
                             return false;
                         break;
-                    case ('['):
-                        if (rightValue > left)
+                    case (']'):
+                        if (rightValue < left)
                             return false;
                         break;
                 }

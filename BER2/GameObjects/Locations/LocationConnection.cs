@@ -35,7 +35,20 @@ public class LocationConnection : IModable
     }
 
     public int? Duration;
-    public string Label = "";
+    [JsonProperty("Label")]
+    private string _label;
+
+    [JsonIgnore]
+    public string Label
+    {
+        get
+        {
+            if (String.IsNullOrEmpty(_label))
+                return TargetLocation.Label;
+            return _label;
+        }
+        set => _label = value;
+    }
 
     public string Type = "Walk";
     public bool interruptible = true;
@@ -80,7 +93,7 @@ public class LocationConnection : IModable
     {
         Duration = Modable.mod(original.Duration, mod.Duration);
         interruptible = Modable.mod(original.interruptible, mod.interruptible);
-        Label = Modable.mod(original.Label, mod.Label);
+        _label = Modable.mod(original._label, mod._label);
         TexturePath = Modable.mod(original.TexturePath, mod.TexturePath);
         Visible = Modable.mod(original.Visible, mod.Visible);
         TargetLocationId = Modable.mod(original.TargetLocationId, mod.TargetLocationId);
@@ -113,7 +126,7 @@ public class LocationConnection : IModable
 
         result.Duration = Modable.copyDeep(Duration);
         result.interruptible = Modable.copyDeep(interruptible);
-        result.Label = Modable.copyDeep(Label);
+        result._label = Modable.copyDeep(_label);
         result.TexturePath = Modable.copyDeep(TexturePath);
         result.Visible = Modable.copyDeep(Visible);
         result.TargetLocationId = Modable.copyDeep(TargetLocationId);

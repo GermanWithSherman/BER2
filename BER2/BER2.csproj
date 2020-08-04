@@ -117,6 +117,9 @@
     <Compile Include="GameObjects\Data\QuestsData.cs" />
     <Compile Include="GameObjects\Data\WorldData.cs" />
     <Compile Include="GameObjects\Dialogue\Dialogue.cs" />
+    <Compile Include="GameObjects\Effects\Effect.cs" />
+    <Compile Include="GameObjects\Effects\EffectsFile.cs" />
+    <Compile Include="GameObjects\Effects\EffectsLibrary.cs" />
     <Compile Include="GameObjects\Events\EventGroup.cs" />
     <Compile Include="GameObjects\Events\EventStage.cs" />
     <Compile Include="GameObjects\Functions\FunctionParameters.cs" />
@@ -158,7 +161,7 @@
     <Compile Include="Manifest\Manifest.cs" />
     <Compile Include="Mods\Mod.cs" />
     <Compile Include="SaveFiles\SaveFile.cs" />
-    <Compile Include="UI\CharacterWindow\CharacterWindow.xaml.cs">
+    <Compile Include="UI\Character\CharacterWindow.xaml.cs">
       <DependentUpon>CharacterWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\EditWindow\EditWindow.xaml.cs">
@@ -174,6 +177,9 @@
     </Compile>
     <Compile Include="UI\GameWindow\NPCs\NPCButton.xaml.cs">
       <DependentUpon>NPCButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\GameWindow\Statusbar\EffectIcon.xaml.cs">
+      <DependentUpon>EffectIcon.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\GameWindow\Statusbar\Statusbar.xaml.cs">
       <DependentUpon>Statusbar.xaml</DependentUpon>
@@ -194,6 +200,15 @@
     </Compile>
     <Compile Include="UI\OutfitWindow\OutfitWindow.xaml.cs">
       <DependentUpon>OutfitWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Services\Service.xaml.cs">
+      <DependentUpon>Service.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Services\ServiceCategory.xaml.cs">
+      <DependentUpon>ServiceCategory.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Services\ServicesWindow.xaml.cs">
+      <DependentUpon>ServicesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\Shopwindow\ShopWindow.xaml.cs">
       <DependentUpon>ShopWindow.xaml</DependentUpon>
@@ -252,7 +267,7 @@
     <Compile Include="Util\Prioritizable\Prioritizable.cs" />
     <Compile Include="Util\Procedure\ProceduresFile.cs" />
     <Compile Include="Util\RandomRange\RandomRange.cs" />
-    <Compile Include="Util\Random\Random.cs" />
+    <Compile Include="Util\Randomness\Random.cs" />
     <Compile Include="Util\TimeFilter\TimeFilter.cs" />
     <Compile Include="Util\Values\Value.cs" />
     <Page Include="MainWindow.xaml">
@@ -267,7 +282,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="UI\CharacterWindow\CharacterWindow.xaml">
+    <Page Include="UI\Character\CharacterWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -284,6 +299,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\GameWindow\NPCs\NPCButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\GameWindow\Statusbar\EffectIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -308,6 +327,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\OutfitWindow\OutfitWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Services\Service.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Services\ServiceCategory.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\Services\ServicesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -359,5 +390,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

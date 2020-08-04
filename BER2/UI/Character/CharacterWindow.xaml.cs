@@ -12,16 +12,34 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace BER2.UI.CharacterWindow
+namespace BER2.UI.Character
 {
     /// <summary>
     /// Interaktionslogik für CharacterWindow.xaml
     /// </summary>
     public partial class CharacterWindow : Window
     {
-        public CharacterWindow()
+
+        private PC _character;
+
+        private CharacterWindow()
         {
             InitializeComponent();
+        }
+
+        public CharacterWindow(PC character):this()
+        {
+            _character = character;
+            Update();
+        }
+
+        private void Update()
+        {
+            TextNameFirst.Text = _character.NameFirst;
+            TextNameLast.Text = _character.NameLast;
+
+            TextAppearanceAge.Text = _character.Age.ToString();
+            TextAppearanceGender.Text = _character.BodyData.GenderVisible;
         }
     }
 }
